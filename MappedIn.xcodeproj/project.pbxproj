@@ -23,6 +23,7 @@
 		7A8AEB30198474CA00943BA7 /* MappedInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB2F198474CA00943BA7 /* MappedInTests.m */; };
 		7A8AEB3A198475C300943BA7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A8AEB39198475C300943BA7 /* MapKit.framework */; };
 		7A8AEB3D1984855F00943BA7 /* XYZOutsideLandsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */; };
+		7ACA0D4C1985487E005FBABB /* green-home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ACA0D4B1985487E005FBABB /* green-home-icon.png */; };
 		7AD8B950198495CD00763FB7 /* XYZOutsideLandsOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */; };
 		7AD8B9531984986F00763FB7 /* XYZOutsideLands.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */; };
 		B211173F1984FFFC0055B843 /* outsidelands.png in Resources */ = {isa = PBXBuildFile; fileRef = B211173C1984FFFC0055B843 /* outsidelands.png */; };
@@ -65,6 +66,7 @@
 		7A8AEB39198475C300943BA7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		7A8AEB3B1984855F00943BA7 /* XYZOutsideLandsOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZOutsideLandsOverlay.h; sourceTree = "<group>"; };
 		7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZOutsideLandsOverlay.m; sourceTree = "<group>"; };
+		7ACA0D4B1985487E005FBABB /* green-home-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-home-icon.png"; sourceTree = "<group>"; };
 		7AD8B94E198495CD00763FB7 /* XYZOutsideLandsOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYZOutsideLandsOverlayView.h; path = ../XYZOutsideLandsOverlayView.h; sourceTree = "<group>"; };
 		7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYZOutsideLandsOverlayView.m; path = ../XYZOutsideLandsOverlayView.m; sourceTree = "<group>"; };
 		7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZOutsideLands.h; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				B211173D1984FFFC0055B843 /* outsidelands_unedited.jpg */,
 				B211173E1984FFFC0055B843 /* map_transparent.png */,
 				B2111746198501C90055B843 /* swipe_icon2.png */,
+				7ACA0D4B1985487E005FBABB /* green-home-icon.png */,
 				B2111744198501B30055B843 /* swipe_icon.png */,
 				7A8AEB1C198474CA00943BA7 /* Images.xcassets */,
 				7A8AEB0B198474CA00943BA7 /* Supporting Files */,
@@ -266,6 +269,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7ACA0D4C1985487E005FBABB /* green-home-icon.png in Resources */,
 				7A8AEB1D198474CA00943BA7 /* Images.xcassets in Resources */,
 				B2111745198501B30055B843 /* swipe_icon.png in Resources */,
 				7A8AEB0F198474CA00943BA7 /* InfoPlist.strings in Resources */,

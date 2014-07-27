@@ -33,20 +33,21 @@
     int current_displayed_map_id;
     NSArray * mapButtonIcon;
 }
+- (IBAction)homeButtonHandler:(id)sender {
+    NSLog(@"Going home"); 
+    [self setToOutsideLands];
+}
 - (IBAction)SegValueChanged:(id)sender {
     switch (self.segControl.selectedSegmentIndex) {
         case 0:
             NSLog(@"11111");
-            [self changeToPublicMap:[self downloadHeatMap]];
-
+//            [self changeToPublicMap:[self downloadHeatMap]];
+            [self changeToPublicMap:nil];
             break;
         case 1: {
             NSLog(@"22222");
-            
-            UIImage *image = [UIImage imageNamed:@"swipe_icon2.png"];
-            [self changeToPublicMap:image];
-       
-            break;}
+            [self changeToPrivateMap:@[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"]];
+            break; }
         default:
             break;
     }
@@ -56,11 +57,41 @@
     return @[];
 }
 
-- (void) changeToPrivateMap:(NSArray*)path{
+- (void) changeToPrivateMap:(NSArray*)pointsArray{
     
+    [self.mainMap removeOverlays:self.mainMap.overlays];
+    current_displayed_map_id = 1;
+    [self addPublicOverlay];
+
+    //NSString *thePath = [[NSBundle mainBundle] pathForResource:@"EntranceToGoliathRoute" ofType:@"plist"];
+//    NSArray *pointsArray = [NSArray arrayWithContentsOfFile:thePath];
+    
+    if(pointsArray == nil || [pointsArray count] == 0) {
+        if(_personalPath == nil) {
+            return;
+        } else {
+            pointsArray =_personalPath;
+        }
+    } else {
+        _personalPath = pointsArray;
+    }
+    NSInteger pointsCount = pointsArray.count;
+    
+    CLLocationCoordinate2D pointsToUse[pointsCount];
+    
+    for(int i = 0; i < pointsCount; i++) {
+        CGPoint p = CGPointFromString(pointsArray[i]);
+        pointsToUse[i] = CLLocationCoordinate2DMake(p.x,p.y);
+    }
+    
+    MKPolyline *myPolyline = [MKPolyline polylineWithCoordinates:pointsToUse count:pointsCount];
+    
+    [self.mainMap addOverlay:myPolyline];
 }
 
+
 - (void) changeToPublicMap:(UIImage*)image {
+    current_displayed_map_id = 0;
     [self.mainMap removeOverlays:self.mainMap.overlays];
     if(image != nil) {
         self.parkImage = image;
@@ -102,9 +133,17 @@
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     NSLog(@"Rendering View");
     if ([overlay isKindOfClass:XYZOutsideLandsOverlay.class]) {
-        self.overlayViewControl = [[XYZOutsideLandsOverlayView alloc] initWithOverlay:overlay overlayImage:self.parkImage];
-        
+        if(current_displayed_map_id == 0) {
+            self.overlayViewControl = [[XYZOutsideLandsOverlayView alloc] initWithOverlay:overlay overlayImage:self.parkImage];
+        } else {
+            self.overlayViewControl = [[XYZOutsideLandsOverlayView alloc] initWithOverlay:overlay overlayImage:nil];
+        }
         return self.overlayViewControl;
+    } else if ([overlay isKindOfClass:MKPolyline.class]) {
+        MKPolylineRenderer *lineView = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
+        lineView.strokeColor = [UIColor greenColor];
+        
+        return lineView;
     }
     return nil;
 }
