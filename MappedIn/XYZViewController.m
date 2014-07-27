@@ -379,12 +379,12 @@
        
         //NSLog(@"Fetched Title: %@", annotation.title);
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-        
+        annotationView.pinColor = MKPinAnnotationColorRed;
         annotationView.animatesDrop = YES;
         annotationView.canShowCallout = YES;
         
         if ([annotation.subtitle isEqualToString:@"Lands End | 12:00-12:40"]) {
-           annotationView.pinColor = MKPinAnnotationColorPurple;
+           //annotationView.pinColor = MKPinAnnotationColorRed;
             NSArray *myArray = self.dictArr[0][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
@@ -395,7 +395,7 @@
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
             annotationView.leftCalloutAccessoryView = iconView;        }
         else if ([annotation.subtitle isEqualToString:@"The Dome By Heineken | 4:30-6:00"]) {
-            annotationView.pinColor = MKPinAnnotationColorPurple;
+            //annotationView.pinColor = MKPinAnnotationColorRed;
             NSArray *myArray = self.dictArr[1][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
@@ -409,7 +409,7 @@
         
         }
         else if ([annotation.subtitle isEqualToString:@"Suto Stage | 2:30-3:00"]) {
-            annotationView.pinColor = MKPinAnnotationColorPurple;
+            //annotationView.pinColor = MKPinAnnotationColorPurple;
             NSArray *myArray = self.dictArr[2][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
@@ -421,7 +421,7 @@
             annotationView.leftCalloutAccessoryView = iconView;
         }
         else if ([annotation.subtitle isEqualToString:@"Panhandle Stage | 12:00-12:40"]) {
-           annotationView.pinColor = MKPinAnnotationColorPurple;
+           //annotationView.pinColor = MKPinAnnotationColorPurple;
             NSArray *myArray = self.dictArr[3][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
@@ -435,7 +435,7 @@
             
         }
         else if ([annotation.subtitle isEqualToString:@"Twin Peaks Stage | 12:00-12:40"]) {
-            annotationView.pinColor = MKPinAnnotationColorPurple;
+            //annotationView.pinColor = MKPinAnnotationColorPurple;
             NSArray *myArray = self.dictArr[4][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
@@ -449,7 +449,7 @@
             
         }
         else if ([annotation.subtitle isEqualToString:@"The Barbary| 12:45-1:45"]) {
-            annotationView.pinColor = MKPinAnnotationColorPurple;
+            //annotationView.pinColor = MKPinAnnotationColorPurple;
             NSArray *myArray = self.dictArr[5][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
