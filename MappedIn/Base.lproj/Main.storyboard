@@ -21,7 +21,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n7W-g5-Ljh">
-                                <rect key="frame" x="17" y="511" width="286" height="29"/>
+                                <rect key="frame" x="17" y="502" width="286" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.96862745098039216" green="0.95294117647058818" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                                 <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>

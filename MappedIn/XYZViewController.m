@@ -13,6 +13,7 @@
 #import "XYZOutsideLands.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CommonCrypto/CommonDigest.h>
+//#import "NSJSONSerialization.h"
 
 
 @interface XYZViewController () <CLLocationManagerDelegate>
@@ -32,26 +33,6 @@
     NSArray * mapButtonIcon;
 }
 
-- (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"swiper has been swiped right");
-    //UIImage *image = [UIImage imageNamed:@"outsidelands_unedited.jpg"];
-   // [self setCurrentImage: image];
-    if(![self increment_displayed_map_id]) return;
-    [self setSwiperImage];
-}
-- (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"swiper has been swiped left");
-    if(![self decrement_displayed_map_id]) return;
-    [self setSwiperImage];
-}
-
-- (void)setSwiperImage {
-    UIImage *image = [UIImage imageNamed:mapButtonIcon[current_displayed_map_id]];
-    if(image == nil) {
-        NSLog(@"swipe_icon not found");
-    }
-    [self.swiperBar setImage:image];
-}
 
 - (bool)increment_displayed_map_id {
     if(current_displayed_map_id < [mapButtonIcon count] - 1) {
@@ -77,6 +58,7 @@
     [super viewDidLoad];
     [self configureStaticUI];
     [self initializeVariables];
+    [self getRequest];
     
 
     // Set up Maps.
@@ -89,24 +71,6 @@
 }
 
 
-
-
-- (void)configureStaticUI
-{
-    // Nav bar - general.
-    //UIImage *image = [UIImage imageNamed:@"logo_small.png"];
-   // [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:image]];  // place logo in nav bar
-    self.title = @"MappedIn";
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
-      NSFontAttributeName,
-      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
-      NSForegroundColorAttributeName, nil]];
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f]};
-    [self.segControl setTitleTextAttributes:attributes
-                                    forState:UIControlStateNormal];
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -132,6 +96,9 @@
     MKCoordinateRegion region = MKCoordinateRegionMake(self.park.midCoordinate, span);
 
     self.mainMap.region = region;
+    
+    [self addPins];
+
 }
 
 - (void)setToCurrentLocation
@@ -172,6 +139,89 @@
 
 
 // Shana
+
+
+- (void)addPins {
+    
+    self.mainMap.delegate = self;
+    
+    MKPointAnnotation *annotation1 = [[MKPointAnnotation alloc] init];
+    annotation1.coordinate = CLLocationCoordinate2DMake(37.7678, -122.49428);
+    [annotation1 setTitle:@"Lands End"];
+    [self.mainMap addAnnotation:annotation1];
+    
+    MKPointAnnotation *annotation2 = [[MKPointAnnotation alloc] init];
+    annotation2.coordinate = CLLocationCoordinate2DMake(37.76809, -122.490965);
+    [annotation2 setTitle:@"The Dome By Heineken"];
+    [self.mainMap addAnnotation:annotation2];
+    
+    MKPointAnnotation *annotation3 = [[MKPointAnnotation alloc] init];
+    annotation3.coordinate = CLLocationCoordinate2DMake(37.769935, -122.49275);
+    [annotation3 setTitle:@"Suto Stage"];
+    [self.mainMap addAnnotation:annotation3];
+    
+    MKPointAnnotation *annotation4 = [[MKPointAnnotation alloc] init];
+    annotation4.coordinate = CLLocationCoordinate2DMake(37.76987, -122.4852);
+    [annotation4 setTitle:@"Panhandle Stage"];
+    [self.mainMap addAnnotation:annotation4];
+    
+    MKPointAnnotation *annotation5 = [[MKPointAnnotation alloc] init];
+    annotation5.coordinate = CLLocationCoordinate2DMake(37.769808, -122.482549);
+    
+    [annotation5 setTitle:@"Twin Peaks Stage"];
+    [self.mainMap addAnnotation:annotation5];
+    
+    MKPointAnnotation *annotation6 = [[MKPointAnnotation alloc] init];
+    annotation6.coordinate = CLLocationCoordinate2DMake(37.770447, -122.48853);
+    [annotation6 setTitle:@"The Barbary"];
+    [self.mainMap addAnnotation:annotation6];
+    
+
+
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation {
+    
+    if([annotation isKindOfClass:[MKUserLocation class]])
+        return nil;
+    
+    static NSString *identifier = @"myAnnotation";
+    MKPinAnnotationView * annotationView = (MKPinAnnotationView*)[self.mainMap dequeueReusableAnnotationViewWithIdentifier:identifier];
+    if (!annotationView)
+    {
+        
+        annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+        annotationView.pinColor = MKPinAnnotationColorPurple;
+        annotationView.animatesDrop = YES;
+        annotationView.canShowCallout = YES;
+    }else {
+        annotationView.annotation = annotation;
+    }
+    annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    return annotationView;
+}
+
+
+- (void)configureStaticUI
+{
+    //nav bar init
+    self.title = @"MappedIn";
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"GurmukhiMN-Bold" size:28],
+      NSFontAttributeName,
+      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
+      NSForegroundColorAttributeName, nil]];
+    
+    // segmenter controller init
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"GurmukhiMN-Bold" size:16], NSFontAttributeName, nil];
+    
+    [self.segControl setTitleTextAttributes:attributes
+                                   forState:UIControlStateNormal];
+}
+
+
+
 - (void)initializeVariables {
 
     manager = [[CLLocationManager alloc] init];
@@ -223,7 +273,40 @@
     NSLog(@"Failed to get location!");
 }
 
--(void)recordLocation:(CLLocation*) location {
+-(void)getRequest {
+    NSURL *url = [NSURL URLWithString:@"https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x"];
+    
+    // Create a download task.
+    NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url
+        completionHandler:^(NSData *data,
+         NSURLResponse *response,
+         NSError *error)
+    {
+      if (!error)
+      {
+          NSError *JSONError = nil;
+          
+          NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
+          if (JSONError)
+          {
+              NSLog(@"Serialization error: %@", JSONError.localizedDescription);
+          }
+          else
+          {
+              NSLog(@"Response: %@", dictionary);
+          }
+      }
+      else
+      {
+          NSLog(@"Error: %@", error.localizedDescription);
+      }
+    }];
+    
+    // Start the task.
+    [task resume];
+}
+
+-(void)pushRequest:(CLLocation*) location {
     UIDevice *device = [UIDevice currentDevice];
     NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
     NSLog(@"Device ID: %@", currentDeviceId);
@@ -273,7 +356,7 @@
     NSTimeInterval eventInterval = [location.timestamp timeIntervalSinceNow];
    if(abs(eventInterval) < 15){ //further than 30sec ago
         //this is recent event
-       [self recordLocation:location];
+       [self pushRequest:location];
    }
 }
 

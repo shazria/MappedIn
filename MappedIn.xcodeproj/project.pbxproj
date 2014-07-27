@@ -30,6 +30,7 @@
 		B21117411984FFFC0055B843 /* map_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = B211173E1984FFFC0055B843 /* map_transparent.png */; };
 		B2111745198501B30055B843 /* swipe_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B2111744198501B30055B843 /* swipe_icon.png */; };
 		B2111747198501C90055B843 /* swipe_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = B2111746198501C90055B843 /* swipe_icon2.png */; };
+		B2111749198536FD0055B843 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2111748198536FD0055B843 /* Spotify.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		B211173E1984FFFC0055B843 /* map_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_transparent.png; sourceTree = "<group>"; };
 		B2111744198501B30055B843 /* swipe_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_icon.png; sourceTree = "<group>"; };
 		B2111746198501C90055B843 /* swipe_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_icon2.png; sourceTree = "<group>"; };
+		B2111748198536FD0055B843 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				7A8AEB3A198475C300943BA7 /* MapKit.framework in Frameworks */,
 				7A8AEB07198474CA00943BA7 /* CoreGraphics.framework in Frameworks */,
 				7A8AEB09198474CA00943BA7 /* UIKit.framework in Frameworks */,
+				B2111749198536FD0055B843 /* Spotify.framework in Frameworks */,
 				7A8AEB05198474CA00943BA7 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +126,7 @@
 		7A8AEB03198474CA00943BA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2111748198536FD0055B843 /* Spotify.framework */,
 				7A8AEB39198475C300943BA7 /* MapKit.framework */,
 				7A8AEB04198474CA00943BA7 /* Foundation.framework */,
 				7A8AEB06198474CA00943BA7 /* CoreGraphics.framework */,
@@ -424,6 +428,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MappedIn/MappedIn-Prefix.pch";
 				INFOPLIST_FILE = "MappedIn/MappedIn-Info.plist";
@@ -440,6 +448,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MappedIn/MappedIn-Prefix.pch";
 				INFOPLIST_FILE = "MappedIn/MappedIn-Info.plist";
