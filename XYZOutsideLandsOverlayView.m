@@ -32,7 +32,6 @@
 
 - (void)drawMapRect:(MKMapRect)mapRect zoomScale:(MKZoomScale)zoomScale inContext:(CGContextRef)context {
     
-    NSLog(@"Drawing!!!!");
     CGImageRef backgroundImageReference = self.backgroundImage.CGImage;
     CGImageRef imageReference = nil;
     if(self.overlayImage !=nil ) {
