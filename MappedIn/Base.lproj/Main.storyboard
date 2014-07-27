@@ -30,6 +30,9 @@
                                     <segment title="PERSONAL"/>
                                 </segments>
                                 <color key="tintColor" red="0.89992357336956519" green="0.73909728079094361" blue="0.1758432143522406" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="SegValueChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="kHl-4w-tdL"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -38,7 +41,7 @@
                     <navigationItem key="navigationItem" id="tXS-RQ-hAX"/>
                     <connections>
                         <outlet property="mainMap" destination="4ub-GB-Y8n" id="8CI-SG-g9x"/>
-                        <outlet property="segControl" destination="n7W-g5-Ljh" id="j0b-dP-BUl"/>
+                        <outlet property="segControl" destination="n7W-g5-Ljh" id="SEx-ac-zVa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

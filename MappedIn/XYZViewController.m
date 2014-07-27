@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *swiperBar;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property UIImage * parkImage;
+@property NSArray * personalPath;
+@property XYZOutsideLandsOverlayView * overlayViewControl;
 @end
 
 #define METERS_PER_MILE 1609.34
@@ -31,15 +33,42 @@
     int current_displayed_map_id;
     NSArray * mapButtonIcon;
 }
+- (IBAction)SegValueChanged:(id)sender {
+    switch (self.segControl.selectedSegmentIndex) {
+        case 0:
+            NSLog(@"11111");
+            [self changeToPublicMap:[self downloadHeatMap]];
 
-- (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"swiper has been swiped right");
-    // [self updateHeatMap];
-    if(![self increment_displayed_map_id]) return;
-    [self setSwiperImage];
+            break;
+        case 1: {
+            NSLog(@"22222");
+            
+            UIImage *image = [UIImage imageNamed:@"swipe_icon2.png"];
+            [self changeToPublicMap:image];
+       
+            break;}
+        default:
+            break;
+    }
 }
 
-- (void)updateHeatMap {
+- (NSArray *)downloadPersonalPath {
+    return @[];
+}
+
+- (void) changeToPrivateMap:(NSArray*)path{
+    
+}
+
+- (void) changeToPublicMap:(UIImage*)image {
+    [self.mainMap removeOverlays:self.mainMap.overlays];
+    if(image != nil) {
+        self.parkImage = image;
+    }
+    [self addPublicOverlay];
+}
+
+- (UIImage *)downloadHeatMap {
     UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://stuki.org/rpc/phone/heatmap"]]];
     NSLog(@"image to download");
     if(image == nil) {
@@ -48,57 +77,36 @@
         NSLog(@"image is downloaded");
     }
 
-    [self setCurrentImage: image];
+    return image;
 }
 
 
-- (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"swiper has been swiped left");
-    if(![self decrement_displayed_map_id]) return;
-    [self setSwiperImage];
+
+//- (void)setToCurrentLocation
+//{
+//    CLLocationCoordinate2D zoomLocation;
+//    // TODO: Retrieve real locations here.
+//    zoomLocation.latitude = 37.768555;
+//    zoomLocation.longitude= -122.488445;
+//    
+//    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
+//    [_mainMap setRegion:viewRegion animated:YES];
+//}
+
+- (void)addPublicOverlay {
+    NSLog(@"Map has been added");
+    XYZOutsideLandsOverlay *overlay = [[XYZOutsideLandsOverlay alloc] initOverlay: _park ];
+    [self.mainMap addOverlay:overlay];
 }
 
-- (void)setSwiperImage {
-    UIImage *image = [UIImage imageNamed:mapButtonIcon[current_displayed_map_id]];
-    if(image == nil) {
-        NSLog(@"swipe_icon not found");
+- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
+    NSLog(@"Rendering View");
+    if ([overlay isKindOfClass:XYZOutsideLandsOverlay.class]) {
+        self.overlayViewControl = [[XYZOutsideLandsOverlayView alloc] initWithOverlay:overlay overlayImage:self.parkImage];
+        
+        return self.overlayViewControl;
     }
-    [self.swiperBar setImage:image];
-}
-
-- (bool)increment_displayed_map_id {
-    if(current_displayed_map_id < [mapButtonIcon count] - 1) {
-        current_displayed_map_id ++;
-        return true;
-    } else {
-        return false;
-    }
-}
-
-- (bool)decrement_displayed_map_id {
-    if(current_displayed_map_id > 0) {
-        current_displayed_map_id --;
-        return true;
-    } else {
-        return false;
-    }
-}
-
-- (void)drawImage: (UIImage*) image {
-    NSLog(@"Adding Image");
-    if(image == nil) {
-        NSLog(@"The image cannot be found");
-    }
-    self.parkImage = image;
-    //[self.mainMap reloadInputViews];
-
-    [self.mainMap removeOverlay:self.mainMap.overlays];
-    [self addOverlay];
-
-}
-
-- (void)drawLine {
-
+    return nil;
 }
 
 - (void)viewDidLoad
@@ -111,35 +119,12 @@
 
     // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
-    UIImage *outsideLandsImage = [UIImage imageNamed:@"map_transparent.png"];
-    [self drawImage: (UIImage *)outsideLandsImage];
-    [self addOverlay];
+
+    [self changeToPublicMap: [self downloadHeatMap]];
+    
     [self setToOutsideLands];
-
 }
 
-- (void)configureStaticUI
-{
-    // Nav bar - general.
-    //UIImage *image = [UIImage imageNamed:@"logo_small.png"];
-   // [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:image]];  // place logo in nav bar
-    self.title = @"MappedIn";
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
-      NSFontAttributeName,
-      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
-      NSForegroundColorAttributeName, nil]];
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f]};
-    [self.segControl setTitleTextAttributes:attributes
-                                    forState:UIControlStateNormal];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -161,35 +146,32 @@
     self.mainMap.region = region;
 }
 
-- (void)setToCurrentLocation
+// -------------------------------------------------------------------------------------------------------
+
+
+- (void)configureStaticUI
 {
-    CLLocationCoordinate2D zoomLocation;
-    // TODO: Retrieve real locations here.
-    zoomLocation.latitude = 37.768555;
-    zoomLocation.longitude= -122.488445;
-
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
-    [_mainMap setRegion:viewRegion animated:YES];
+    // Nav bar - general.
+    //UIImage *image = [UIImage imageNamed:@"logo_small.png"];
+    // [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:image]];  // place logo in nav bar
+    self.title = @"MappedIn";
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
+      NSFontAttributeName,
+      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
+      NSForegroundColorAttributeName, nil]];
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f]};
+    [self.segControl setTitleTextAttributes:attributes
+                                   forState:UIControlStateNormal];
 }
 
-- (void)addOverlay {
-    NSLog(@"Map has been added");
-    XYZOutsideLandsOverlay *overlay = [[XYZOutsideLandsOverlay alloc] initOverlay: _park ];
-    [self.mainMap addOverlay:overlay];
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
-- (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
-    NSLog(@"Rendering View");
-    if ([overlay isKindOfClass:XYZOutsideLandsOverlay.class]) {
-        XYZOutsideLandsOverlayView *overlayView = [[XYZOutsideLandsOverlayView alloc] initWithOverlay:overlay overlayImage:self.parkImage];
-
-        return overlayView;
-    }
-    return nil;
-}
-
-
-// Shana
 - (void)initializeVariables {
 
     manager = [[CLLocationManager alloc] init];
@@ -204,8 +186,6 @@
     current_displayed_map_id = 0;
     mapButtonIcon = @[@"swipe_icon.png", @"swipe_icon2.png"];
 
-    [self setSwiperImage];
-    [self.swiperBar setUserInteractionEnabled:YES];
 
 }
 

@@ -11,5 +11,5 @@
 @interface XYZOutsideLandsOverlayView : MKOverlayRenderer
 
 - (instancetype)initWithOverlay:(id<MKOverlay>)overlay overlayImage:(UIImage *)overlayImage;
-
+- (void) changeOverlayImage: (UIImage *) image; 
 @end
