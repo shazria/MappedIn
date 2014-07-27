@@ -22,15 +22,15 @@
         
         _overlayBottomLeftCoordinate = CLLocationCoordinate2DMake(37.765987, -122.495886);
         
-        _overlayBottomRightCoordinate =CLLocationCoordinate2DMake(37.765885, -122.480908);
+//        _overlayBottomRightCoordinate =CLLocationCoordinate2DMake(37.765885, -122.480908);
     }
     
     return self;
 }
 
-//- (CLLocationCoordinate2D)overlayBottomRightCoordinate {
-//    return CLLocationCoordinate2DMake(self.overlayBottomLeftCoordinate.latitude, self.overlayTopRightCoordinate.longitude);
-//}
+- (CLLocationCoordinate2D)overlayBottomRightCoordinate {
+    return CLLocationCoordinate2DMake(self.overlayBottomLeftCoordinate.latitude, self.overlayTopRightCoordinate.longitude);
+}
 
 - (MKMapRect)overlayBoundingMapRect {
     

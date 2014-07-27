@@ -33,10 +33,22 @@
 
 - (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped right");
-    UIImage *image = [UIImage imageNamed:@"outsidelands_unedited.jpg"];
+    [self updateHeatMap];
+    if(![self increment_displayed_map_id]) return;
+    [self setSwiperImage];
+}
+
+- (void)updateHeatMap {
+    UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://stuki.org/rpc/phone/heatmap"]]];
+    NSLog(@"image to download");
+    if(image == nil) {
+        NSLog(@"image is not downloaded");
+    } else {
+        NSLog(@"image is downloaded");
+    }
+    
     [self setCurrentImage: image];
-//    if(![self increment_displayed_map_id]) return;
-//    [self setSwiperImage];
+
 }
 - (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped left");
@@ -86,8 +98,6 @@
     
 }
 
-
-
 - (void)configureStaticUI
 {
     // Nav bar - general.
@@ -114,7 +124,7 @@
 
     CLLocationDegrees longDelta = self.park.overlayTopLeftCoordinate.longitude - self.park.overlayBottomRightCoordinate.longitude;
 
-    MKCoordinateSpan span = MKCoordinateSpanMake(fabsf(longDelta), 0.0);
+    MKCoordinateSpan span = MKCoordinateSpanMake(fabsf(latDelta), 0.0);
 
     MKCoordinateRegion region = MKCoordinateRegionMake(self.park.midCoordinate, span);
 
@@ -144,7 +154,11 @@
         NSLog(@"The image cannot be found");
     }
     self.parkImage = image;
-    [self.mainMap reloadInputViews];
+    //[self.mainMap reloadInputViews];
+    
+    [self.mainMap removeOverlay:self.mainMap.overlays];
+    [self addOverlay];
+
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
@@ -164,7 +178,7 @@
     manager = [[CLLocationManager alloc] init];
     manager.delegate = self;
     manager.desiredAccuracy = kCLLocationAccuracyBest;
-    manager.distanceFilter = 10;
+    manager.distanceFilter = 15;
     [manager startUpdatingLocation];
     
     //Initialize swiper
@@ -173,11 +187,7 @@
     current_displayed_map_id = 0;
     mapButtonIcon = @[@"swipe_icon.png", @"swipe_icon2.png"];
     
-    UIImage *image = [UIImage imageNamed:@"swipe_icon.png"];
-    if(image == nil) {
-        NSLog(@"swipe_icon not found");
-    }
-    [self.swiperBar setImage:image];
+    [self setSwiperImage];
     [self.swiperBar setUserInteractionEnabled:YES];
     
 }

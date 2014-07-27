@@ -25,11 +25,11 @@
 		7A8AEB3D1984855F00943BA7 /* XYZOutsideLandsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */; };
 		7AD8B950198495CD00763FB7 /* XYZOutsideLandsOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */; };
 		7AD8B9531984986F00763FB7 /* XYZOutsideLands.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */; };
-		7AD8B9571984B23900763FB7 /* outsidelands.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B9561984B23900763FB7 /* outsidelands.png */; };
-		7AD8B9591984B95F00763FB7 /* map_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B9581984B95F00763FB7 /* map_transparent.png */; };
-		7AD8B95B1984BC3A00763FB7 /* outsidelands_unedited.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B95A1984BC3A00763FB7 /* outsidelands_unedited.jpg */; };
-		7AD8B95D1984EAFE00763FB7 /* swipe_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B95C1984EAFE00763FB7 /* swipe_icon.png */; };
-		7AD8B95F1984F53E00763FB7 /* swipe_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B95E1984F53E00763FB7 /* swipe_icon2.png */; };
+		7AD8B965198500C700763FB7 /* map_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B960198500C700763FB7 /* map_transparent.png */; };
+		7AD8B966198500C700763FB7 /* outsidelands_unedited.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B961198500C700763FB7 /* outsidelands_unedited.jpg */; };
+		7AD8B967198500C700763FB7 /* outsidelands.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B962198500C700763FB7 /* outsidelands.png */; };
+		7AD8B968198500C700763FB7 /* swipe_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B963198500C700763FB7 /* swipe_icon.png */; };
+		7AD8B969198500C700763FB7 /* swipe_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B964198500C700763FB7 /* swipe_icon2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,11 +69,11 @@
 		7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYZOutsideLandsOverlayView.m; path = ../XYZOutsideLandsOverlayView.m; sourceTree = "<group>"; };
 		7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZOutsideLands.h; sourceTree = "<group>"; };
 		7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZOutsideLands.m; sourceTree = "<group>"; };
-		7AD8B9561984B23900763FB7 /* outsidelands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = outsidelands.png; path = ../../../outsidelands.png; sourceTree = "<group>"; };
-		7AD8B9581984B95F00763FB7 /* map_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map_transparent.png; path = ../../../map_transparent.png; sourceTree = "<group>"; };
-		7AD8B95A1984BC3A00763FB7 /* outsidelands_unedited.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = outsidelands_unedited.jpg; path = ../../../outsidelands_unedited.jpg; sourceTree = "<group>"; };
-		7AD8B95C1984EAFE00763FB7 /* swipe_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = swipe_icon.png; path = ../../../swipe_icon.png; sourceTree = "<group>"; };
-		7AD8B95E1984F53E00763FB7 /* swipe_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = swipe_icon2.png; path = ../../../swipe_icon2.png; sourceTree = "<group>"; };
+		7AD8B960198500C700763FB7 /* map_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map_transparent.png; sourceTree = "<group>"; };
+		7AD8B961198500C700763FB7 /* outsidelands_unedited.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = outsidelands_unedited.jpg; sourceTree = "<group>"; };
+		7AD8B962198500C700763FB7 /* outsidelands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outsidelands.png; sourceTree = "<group>"; };
+		7AD8B963198500C700763FB7 /* swipe_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_icon.png; sourceTree = "<group>"; };
+		7AD8B964198500C700763FB7 /* swipe_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_icon2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,11 +146,11 @@
 				7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */,
 				7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */,
 				7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */,
-				7AD8B9561984B23900763FB7 /* outsidelands.png */,
-				7AD8B95C1984EAFE00763FB7 /* swipe_icon.png */,
-				7AD8B95E1984F53E00763FB7 /* swipe_icon2.png */,
-				7AD8B95A1984BC3A00763FB7 /* outsidelands_unedited.jpg */,
-				7AD8B9581984B95F00763FB7 /* map_transparent.png */,
+				7AD8B960198500C700763FB7 /* map_transparent.png */,
+				7AD8B961198500C700763FB7 /* outsidelands_unedited.jpg */,
+				7AD8B962198500C700763FB7 /* outsidelands.png */,
+				7AD8B963198500C700763FB7 /* swipe_icon.png */,
+				7AD8B964198500C700763FB7 /* swipe_icon2.png */,
 				7A8AEB1C198474CA00943BA7 /* Images.xcassets */,
 				7A8AEB0B198474CA00943BA7 /* Supporting Files */,
 			);
@@ -267,13 +267,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A8AEB1D198474CA00943BA7 /* Images.xcassets in Resources */,
+				7AD8B965198500C700763FB7 /* map_transparent.png in Resources */,
+				7AD8B967198500C700763FB7 /* outsidelands.png in Resources */,
 				7A8AEB0F198474CA00943BA7 /* InfoPlist.strings in Resources */,
-				7AD8B95B1984BC3A00763FB7 /* outsidelands_unedited.jpg in Resources */,
-				7AD8B9571984B23900763FB7 /* outsidelands.png in Resources */,
-				7AD8B95F1984F53E00763FB7 /* swipe_icon2.png in Resources */,
-				7AD8B95D1984EAFE00763FB7 /* swipe_icon.png in Resources */,
-				7AD8B9591984B95F00763FB7 /* map_transparent.png in Resources */,
+				7AD8B969198500C700763FB7 /* swipe_icon2.png in Resources */,
+				7AD8B968198500C700763FB7 /* swipe_icon.png in Resources */,
 				7A8AEB18198474CA00943BA7 /* Main.storyboard in Resources */,
+				7AD8B966198500C700763FB7 /* outsidelands_unedited.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
