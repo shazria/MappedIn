@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>8A4AAF92-E736-4FD4-A2CB-FBAD393106DF</string>
+	<string>79BAB129-379B-4A41-A364-1E46941923DE</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MappedIn</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>921D1447-CEB3-4F1B-92DC-A3F0C04A603D</key>
-		<string>https://github.com/ralphma/sandbox.git</string>
+		<key>3542C8D0-FDF0-44FE-9FB2-3B468FAE2C28</key>
+		<string>https://github.com/ralphma/MappedIn.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>MappedIn/MappedIn.xcodeproj/project.xcworkspace</string>
+	<string>MappedIn.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>921D1447-CEB3-4F1B-92DC-A3F0C04A603D</key>
-		<string>../../..</string>
+		<key>3542C8D0-FDF0-44FE-9FB2-3B468FAE2C28</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/ralphma/sandbox.git</string>
+	<string>https://github.com/ralphma/MappedIn.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>921D1447-CEB3-4F1B-92DC-A3F0C04A603D</string>
+	<string>3542C8D0-FDF0-44FE-9FB2-3B468FAE2C28</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>921D1447-CEB3-4F1B-92DC-A3F0C04A603D</string>
+			<string>3542C8D0-FDF0-44FE-9FB2-3B468FAE2C28</string>
 			<key>IDESourceControlWCCName</key>
-			<string>sandbox</string>
+			<string>MappedIn</string>
 		</dict>
 	</array>
 </dict>
