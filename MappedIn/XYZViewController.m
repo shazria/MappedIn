@@ -48,8 +48,8 @@
     }
     
     [self setCurrentImage: image];
-
 }
+
 - (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped left");
     if(![self decrement_displayed_map_id]) return;
@@ -82,6 +82,23 @@
     }
 }
 
+- (void)drawImage: (UIImage*) image {
+    NSLog(@"Adding Image");
+    if(image == nil) {
+        NSLog(@"The image cannot be found");
+    }
+    self.parkImage = image;
+    //[self.mainMap reloadInputViews];
+    
+    [self.mainMap removeOverlay:self.mainMap.overlays];
+    [self addOverlay];
+    
+}
+
+- (void)drawLine {
+    
+}
+
 - (void)viewDidLoad
 {
     NSLog(@"View is loading");
@@ -92,7 +109,7 @@
     // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
     UIImage *outsideLandsImage = [UIImage imageNamed:@"map_transparent.png"];
-    [self setCurrentImage: (UIImage *)outsideLandsImage];
+    [self drawImage: (UIImage *)outsideLandsImage];
     [self addOverlay];
     [self setToOutsideLands];
     
@@ -146,19 +163,6 @@
     NSLog(@"Map has been added");
     XYZOutsideLandsOverlay *overlay = [[XYZOutsideLandsOverlay alloc] initOverlay: _park ];
     [self.mainMap addOverlay:overlay];
-}
-
-- (void)setCurrentImage: (UIImage*) image {
-    NSLog(@"Adding Image");
-    if(image == nil) {
-        NSLog(@"The image cannot be found");
-    }
-    self.parkImage = image;
-    //[self.mainMap reloadInputViews];
-    
-    [self.mainMap removeOverlay:self.mainMap.overlays];
-    [self addOverlay];
-
 }
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
