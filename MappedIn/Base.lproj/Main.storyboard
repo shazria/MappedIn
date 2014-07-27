@@ -17,18 +17,20 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ub-GB-Y8n">
-                                <rect key="frame" x="0.0" y="67" width="320" height="438"/>
+                                <rect key="frame" x="0.0" y="67" width="320" height="501"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GKT-ba-ic3">
-                                <rect key="frame" x="0.0" y="502" width="320" height="66"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="n7W-g5-Ljh">
+                                <rect key="frame" x="17" y="511" width="286" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="0Ri-j7-3bS" appends="YES" id="ch9-x0-SpJ"/>
-                                    <outletCollection property="gestureRecognizers" destination="gJe-90-4Nr" appends="YES" id="6aZ-LE-FLQ"/>
-                                </connections>
-                            </imageView>
+                                <color key="backgroundColor" red="0.96862745098039216" green="0.95294117647058818" blue="0.90588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="contentStretch" x="1" y="0.0" width="1" height="1"/>
+                                <segments>
+                                    <segment title="MAIN"/>
+                                    <segment title="PERSONAL"/>
+                                </segments>
+                                <color key="tintColor" red="0.89992357336956519" green="0.73909728079094361" blue="0.1758432143522406" alpha="1" colorSpace="calibratedRGB"/>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -36,20 +38,10 @@
                     <navigationItem key="navigationItem" id="tXS-RQ-hAX"/>
                     <connections>
                         <outlet property="mainMap" destination="4ub-GB-Y8n" id="8CI-SG-g9x"/>
-                        <outlet property="swiperBar" destination="GKT-ba-ic3" id="J8q-el-CJX"/>
+                        <outlet property="segControl" destination="n7W-g5-Ljh" id="j0b-dP-BUl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" delaysTouchesEnded="NO" direction="right" id="0Ri-j7-3bS">
-                    <connections>
-                        <action selector="swipeRight:" destination="vXZ-lx-hvc" id="R5h-2Z-rqH"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="gJe-90-4Nr">
-                    <connections>
-                        <action selector="swipeLeft:" destination="vXZ-lx-hvc" id="gVg-Qg-AZh"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="816" y="66"/>
         </scene>
@@ -61,6 +53,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="laP-SK-jJh">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.96862745100000003" green="0.95294117649999999" blue="0.90588235289999997" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

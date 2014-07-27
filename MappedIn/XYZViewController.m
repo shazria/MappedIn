@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mainMap;
 @property XYZOutsideLands * park;
 @property (weak, nonatomic) IBOutlet UIImageView *swiperBar;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property UIImage * parkImage;
 @end
 
@@ -33,10 +34,10 @@
 
 - (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped right");
-    UIImage *image = [UIImage imageNamed:@"outsidelands_unedited.jpg"];
-    [self setCurrentImage: image];
-//    if(![self increment_displayed_map_id]) return;
-//    [self setSwiperImage];
+    //UIImage *image = [UIImage imageNamed:@"outsidelands_unedited.jpg"];
+   // [self setCurrentImage: image];
+    if(![self increment_displayed_map_id]) return;
+    [self setSwiperImage];
 }
 - (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped left");
@@ -76,6 +77,7 @@
     [super viewDidLoad];
     [self configureStaticUI];
     [self initializeVariables];
+    
 
     // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
@@ -88,11 +90,22 @@
 
 
 
+
 - (void)configureStaticUI
 {
     // Nav bar - general.
     //UIImage *image = [UIImage imageNamed:@"logo_small.png"];
    // [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:image]];  // place logo in nav bar
+    self.title = @"MappedIn";
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
+      NSFontAttributeName,
+      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
+      NSForegroundColorAttributeName, nil]];
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f]};
+    [self.segControl setTitleTextAttributes:attributes
+                                    forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
