@@ -84,69 +84,65 @@
     NSLog(@"Failed to get location!");
 }
 
+-(void)pushRequest:(NSDictionary *)mapData {
+    NSError *error;
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
+    NSURL *url = [NSURL URLWithString:@"http://stuki.org/api/phone/location"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:60.0];
+    
+    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
+    [request setHTTPBody:postData];
+    
+    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error1) {
+        
+        if(error1 == nil)
+        {
+            NSString * text = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+            NSLog(@"Data = %@",text);
+        }
+        
+    }];
+    
+    [postDataTask resume];
+    
+    NSLog(@"attempted post request");
+    
+}
+
 
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *location = [locations lastObject];
-    
-    //make sure this is a recent location event
+
     NSTimeInterval eventInterval = [location.timestamp timeIntervalSinceNow];
-   if(abs(eventInterval) < 15){ //further than 30sec ago
-        //this is recent event
+   if(abs(eventInterval) < 15){ //make sure it is a recent event
+       
        UIDevice *device = [UIDevice currentDevice];
        NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
-       NSLog(@"Device ID: %@", currentDeviceId);
+       //NSLog(@"Device ID: %@", currentDeviceId);
        NSString *encryptedStr = [self sha1: currentDeviceId];
-       NSLog(@"Device ID encrypted: %@", encryptedStr);
-       NSLog(@"latitude %+.6f, longitude %+.6f\n",
-             location.coordinate.latitude,
-             location.coordinate.longitude);
-       
-       //send push request
-       NSError *error;
-       
-       NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-       NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-       NSURL *url = [NSURL URLWithString:@"http://stuki.org/api/phone/location"];
-       NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                          timeoutInterval:60.0];
-       
-       [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-       [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-       
-       [request setHTTPMethod:@"POST"];
-       
+       //NSLog(@"Device ID encrypted: %@", encryptedStr);
+       //NSLog(@"latitude %+.6f, longitude %+.6f\n",location.coordinate.latitude, location.coordinate.longitude);
        NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:
-                             encryptedStr, @"phone_id",
-                           [NSNumber numberWithDouble:location.coordinate.latitude], @"latitude",
-                          [NSNumber numberWithDouble:location.coordinate.longitude], @"longitude",
-                        nil];
-       
-       NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-       [request setHTTPBody:postData];
-       
-       NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-           
-           if(error == nil)
-           {
-               NSString * text = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
-               NSLog(@"Data = %@",text);
-           }
-       
-       }];
-    
-       [postDataTask resume];
-    
-       NSLog(@"attempted post request");
+                                encryptedStr, @"phone_id",
+                                [NSNumber numberWithDouble:location.coordinate.latitude], @"latitude",
+                                [NSNumber numberWithDouble:location.coordinate.longitude], @"longitude",
+                                nil];
+       //send push request
+       [self pushRequest:mapData];
     
     
     }
 
 }
-
-
-
 
 
 
