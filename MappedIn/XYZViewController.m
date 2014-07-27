@@ -65,17 +65,30 @@
 - (void)removeAllPinsButUserLocation
 {
     id userLocation = [self.mainMap userLocation];
-    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mainMap annotations]];
-    if ( userLocation != nil ) {
-        [pins removeObject:userLocation]; // avoid removing user location off the map
+    NSMutableArray *allPins =[[NSMutableArray alloc] initWithArray:[self.mainMap annotations]];
+//    if ( userLocation != nil ) {
+//        [pins removeObject:userLocation]; // avoid removing user location off the map
+//    }
+    XYZPathViewAnnotation * one = nil;
+    XYZPathViewAnnotation * two = nil ;
+    for(int i = 0;i < [[self.mainMap annotations] count]; i++) {
+        NSLog(@"shit"); 
+        if(![allPins[i] isKindOfClass:[XYZPathViewAnnotation class]]) {
+            if([allPins[i] isEqualToString: @"one"])
+                one = allPins[i];
+            if([allPins[i]isEqualToString: @"two"])
+                two = allPins[i];
+        }
     }
 
-    [self.mainMap removeAnnotations:pins];
-    pins = nil;
+    [allPins removeObject:one];
+    [allPins removeObject:two];
+    [self.mainMap removeAnnotations:allPins];
+    allPins = nil;
 }
 
 - (void) resetMap {
-    [self removeAllPinsButUserLocation];
+//    [self removeAllPinsButUserLocation];
     [self.mainMap removeOverlays:self.mainMap.overlays];
 }
 
@@ -116,8 +129,9 @@
     }
     NSArray *array = [NSArray arrayWithArray:coordinates];
     
-    return array;
+//    return array;
 //    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
+    return @[@"{37.767916797120236,-122.49392372384827}",@"{37.768829752338533,-122.49199025827274}",@"{37.768981082571756,-122.49048731503703}",@"{37.768914588150821,-122.49042621746531}",@"{37.769194491752273,-122.48962664332748}",@"{37.769553803943005,-122.48789343536545}",@"{37.769888761701729,-122.48661272283738}",@"{37.769441179991226,-122.48604763578537}",@"{37.769960191207161,-122.48313687100783}",@"{37.769500779524847,-122.48424637957896}",@"{37.770560579566443,-122.4909186420783}",@"{37.770006879083326,-122.49258694080943}"];
     
 }
 
@@ -160,11 +174,13 @@
     
     [self.mainMap addOverlay:myPolyline];
     
-    XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
-    XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
-    
-    [self.mainMap addAnnotations:@[begin,end]];
-    [self addPins];
+//    XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
+//    begin.title = @"one";
+//    XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
+//    begin.title = @"two";
+//    
+//    [self.mainMap addAnnotations:@[begin,end]];
+//    [self addPins];
 }
 
 
@@ -175,7 +191,7 @@
         self.parkImage = image;
     }
     [self addPublicOverlay];
-    [self addPins];
+//    [self addPins];
 }
 
 - (UIImage *)downloadHeatMap {
@@ -208,7 +224,8 @@
         return self.overlayViewControl;
     } else if ([overlay isKindOfClass:MKPolyline.class]) {
         MKPolylineRenderer *lineView = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
-        lineView.strokeColor = [UIColor greenColor];
+        lineView.strokeColor = [UIColor blueColor];
+        lineView.lineWidth = 2.0;
 
         return lineView;
     }
