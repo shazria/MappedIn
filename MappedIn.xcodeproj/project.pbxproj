@@ -22,6 +22,12 @@
 		7A8AEB2E198474CA00943BA7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A8AEB2C198474CA00943BA7 /* InfoPlist.strings */; };
 		7A8AEB30198474CA00943BA7 /* MappedInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB2F198474CA00943BA7 /* MappedInTests.m */; };
 		7A8AEB3A198475C300943BA7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A8AEB39198475C300943BA7 /* MapKit.framework */; };
+		7A8AEB3D1984855F00943BA7 /* XYZOutsideLandsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */; };
+		7AD8B950198495CD00763FB7 /* XYZOutsideLandsOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */; };
+		7AD8B9531984986F00763FB7 /* XYZOutsideLands.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */; };
+		7AD8B9571984B23900763FB7 /* outsidelands.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B9561984B23900763FB7 /* outsidelands.png */; };
+		7AD8B9591984B95F00763FB7 /* map_transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B9581984B95F00763FB7 /* map_transparent.png */; };
+		7AD8B95B1984BC3A00763FB7 /* outsidelands_unedited.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7AD8B95A1984BC3A00763FB7 /* outsidelands_unedited.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +61,15 @@
 		7A8AEB2D198474CA00943BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7A8AEB2F198474CA00943BA7 /* MappedInTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MappedInTests.m; sourceTree = "<group>"; };
 		7A8AEB39198475C300943BA7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		7A8AEB3B1984855F00943BA7 /* XYZOutsideLandsOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZOutsideLandsOverlay.h; sourceTree = "<group>"; };
+		7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZOutsideLandsOverlay.m; sourceTree = "<group>"; };
+		7AD8B94E198495CD00763FB7 /* XYZOutsideLandsOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYZOutsideLandsOverlayView.h; path = ../XYZOutsideLandsOverlayView.h; sourceTree = "<group>"; };
+		7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYZOutsideLandsOverlayView.m; path = ../XYZOutsideLandsOverlayView.m; sourceTree = "<group>"; };
+		7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZOutsideLands.h; sourceTree = "<group>"; };
+		7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZOutsideLands.m; sourceTree = "<group>"; };
+		7AD8B9561984B23900763FB7 /* outsidelands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = outsidelands.png; path = ../../../outsidelands.png; sourceTree = "<group>"; };
+		7AD8B9581984B95F00763FB7 /* map_transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map_transparent.png; path = ../../../map_transparent.png; sourceTree = "<group>"; };
+		7AD8B95A1984BC3A00763FB7 /* outsidelands_unedited.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = outsidelands_unedited.jpg; path = ../../../outsidelands_unedited.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,9 +133,18 @@
 			children = (
 				7A8AEB13198474CA00943BA7 /* XYZAppDelegate.h */,
 				7A8AEB14198474CA00943BA7 /* XYZAppDelegate.m */,
+				7AD8B94E198495CD00763FB7 /* XYZOutsideLandsOverlayView.h */,
+				7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */,
 				7A8AEB16198474CA00943BA7 /* Main.storyboard */,
 				7A8AEB19198474CA00943BA7 /* XYZViewController.h */,
 				7A8AEB1A198474CA00943BA7 /* XYZViewController.m */,
+				7A8AEB3B1984855F00943BA7 /* XYZOutsideLandsOverlay.h */,
+				7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */,
+				7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */,
+				7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */,
+				7AD8B9561984B23900763FB7 /* outsidelands.png */,
+				7AD8B95A1984BC3A00763FB7 /* outsidelands_unedited.jpg */,
+				7AD8B9581984B95F00763FB7 /* map_transparent.png */,
 				7A8AEB1C198474CA00943BA7 /* Images.xcassets */,
 				7A8AEB0B198474CA00943BA7 /* Supporting Files */,
 			);
@@ -204,6 +228,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
+					7A8AEB00198474CA00943BA7 = {
+						DevelopmentTeam = STPYU7UNB9;
+					};
 					7A8AEB21198474CA00943BA7 = {
 						TestTargetID = 7A8AEB00198474CA00943BA7;
 					};
@@ -235,6 +262,9 @@
 			files = (
 				7A8AEB1D198474CA00943BA7 /* Images.xcassets in Resources */,
 				7A8AEB0F198474CA00943BA7 /* InfoPlist.strings in Resources */,
+				7AD8B95B1984BC3A00763FB7 /* outsidelands_unedited.jpg in Resources */,
+				7AD8B9571984B23900763FB7 /* outsidelands.png in Resources */,
+				7AD8B9591984B95F00763FB7 /* map_transparent.png in Resources */,
 				7A8AEB18198474CA00943BA7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,7 +286,10 @@
 			files = (
 				7A8AEB1B198474CA00943BA7 /* XYZViewController.m in Sources */,
 				7A8AEB15198474CA00943BA7 /* XYZAppDelegate.m in Sources */,
+				7AD8B9531984986F00763FB7 /* XYZOutsideLands.m in Sources */,
+				7AD8B950198495CD00763FB7 /* XYZOutsideLandsOverlayView.m in Sources */,
 				7A8AEB11198474CA00943BA7 /* main.m in Sources */,
+				7A8AEB3D1984855F00943BA7 /* XYZOutsideLandsOverlay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,10 +414,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MappedIn/MappedIn-Prefix.pch";
 				INFOPLIST_FILE = "MappedIn/MappedIn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -394,10 +430,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MappedIn/MappedIn-Prefix.pch";
 				INFOPLIST_FILE = "MappedIn/MappedIn-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -461,6 +500,7 @@
 				7A8AEB35198474CA00943BA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7A8AEB36198474CA00943BA7 /* Build configuration list for PBXNativeTarget "MappedInTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +509,7 @@
 				7A8AEB38198474CA00943BA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
