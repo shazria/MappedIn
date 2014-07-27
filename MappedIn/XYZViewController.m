@@ -13,6 +13,7 @@
 #import "XYZOutsideLands.h"
 #import <CoreLocation/CoreLocation.h>
 #import <CommonCrypto/CommonDigest.h>
+#import "XYZPathViewAnnotation.h"
 
 
 @interface XYZViewController () <CLLocationManagerDelegate>
@@ -34,32 +35,48 @@
     NSArray * mapButtonIcon;
 }
 - (IBAction)homeButtonHandler:(id)sender {
-    NSLog(@"Going home"); 
+    NSLog(@"Going home");
     [self setToOutsideLands];
 }
 - (IBAction)SegValueChanged:(id)sender {
     switch (self.segControl.selectedSegmentIndex) {
         case 0:
             NSLog(@"11111");
-//            [self changeToPublicMap:[self downloadHeatMap]];
-            [self changeToPublicMap:nil];
+            [self changeToPublicMap:[self downloadHeatMap]];
             break;
         case 1: {
             NSLog(@"22222");
-            [self changeToPrivateMap:@[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"]];
+            [self changeToPrivateMap:[self downloadPersonalPath]];
             break; }
         default:
             break;
     }
 }
 
+- (void)removeAllPinsButUserLocation
+{
+    id userLocation = [self.mainMap userLocation];
+    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mainMap annotations]];
+    if ( userLocation != nil ) {
+        [pins removeObject:userLocation]; // avoid removing user location off the map
+    }
+    
+    [self.mainMap removeAnnotations:pins];
+    pins = nil;
+}
+
+- (void) resetMap {
+    [self removeAllPinsButUserLocation];
+    [self.mainMap removeOverlays:self.mainMap.overlays];
+}
 - (NSArray *)downloadPersonalPath {
-    return @[];
+    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
 }
 
 - (void) changeToPrivateMap:(NSArray*)pointsArray{
     
-    [self.mainMap removeOverlays:self.mainMap.overlays];
+    
+    [self resetMap];
     current_displayed_map_id = 1;
     [self addPublicOverlay];
 
@@ -87,12 +104,17 @@
     MKPolyline *myPolyline = [MKPolyline polylineWithCoordinates:pointsToUse count:pointsCount];
     
     [self.mainMap addOverlay:myPolyline];
+    
+    XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
+    XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
+    
+    [self.mainMap addAnnotations:@[begin,end]];
 }
 
 
 - (void) changeToPublicMap:(UIImage*)image {
     current_displayed_map_id = 0;
-    [self.mainMap removeOverlays:self.mainMap.overlays];
+    [self resetMap];
     if(image != nil) {
         self.parkImage = image;
     }
@@ -178,13 +200,19 @@
 
     CLLocationDegrees longDelta = self.park.overlayTopLeftCoordinate.longitude - self.park.overlayBottomRightCoordinate.longitude;
 
-    MKCoordinateSpan span = MKCoordinateSpanMake(fabsf(latDelta), 0.0);
+    MKCoordinateSpan span = MKCoordinateSpanMake(fabsf(2*latDelta), 0.0);
 
     MKCoordinateRegion region = MKCoordinateRegionMake(self.park.midCoordinate, span);
 
     self.mainMap.region = region;
 }
 
+- (XYZPathViewAnnotation *)createAnnotations:(CLLocationCoordinate2D)coord text: (NSString*) title
+{
+    NSMutableArray *annotations = [[NSMutableArray alloc] init];
+    XYZPathViewAnnotation *annotation = [[XYZPathViewAnnotation alloc] initWithTitle:title AndCoordinate:coord];
+    return annotation;
+}
 // -------------------------------------------------------------------------------------------------------
 
 
