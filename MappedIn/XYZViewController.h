@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XYZViewController : UIViewController
+@interface XYZViewController : UIViewController <NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate>
 
 @end

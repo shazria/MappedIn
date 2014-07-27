@@ -22,6 +22,8 @@
 		7A8AEB2E198474CA00943BA7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A8AEB2C198474CA00943BA7 /* InfoPlist.strings */; };
 		7A8AEB30198474CA00943BA7 /* MappedInTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB2F198474CA00943BA7 /* MappedInTests.m */; };
 		7A8AEB3A198475C300943BA7 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A8AEB39198475C300943BA7 /* MapKit.framework */; };
+		B211172D19847A660055B843 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B211172C19847A660055B843 /* CoreLocation.framework */; };
+		B211172F1984BEB50055B843 /* logo_small.png in Resources */ = {isa = PBXBuildFile; fileRef = B211172E1984BEB50055B843 /* logo_small.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		7A8AEB2D198474CA00943BA7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7A8AEB2F198474CA00943BA7 /* MappedInTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MappedInTests.m; sourceTree = "<group>"; };
 		7A8AEB39198475C300943BA7 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B211172C19847A660055B843 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B211172E1984BEB50055B843 /* logo_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_small.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B211172D19847A660055B843 /* CoreLocation.framework in Frameworks */,
 				7A8AEB3A198475C300943BA7 /* MapKit.framework in Frameworks */,
 				7A8AEB07198474CA00943BA7 /* CoreGraphics.framework in Frameworks */,
 				7A8AEB09198474CA00943BA7 /* UIKit.framework in Frameworks */,
@@ -104,6 +109,7 @@
 		7A8AEB03198474CA00943BA7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B211172C19847A660055B843 /* CoreLocation.framework */,
 				7A8AEB39198475C300943BA7 /* MapKit.framework */,
 				7A8AEB04198474CA00943BA7 /* Foundation.framework */,
 				7A8AEB06198474CA00943BA7 /* CoreGraphics.framework */,
@@ -130,6 +136,7 @@
 		7A8AEB0B198474CA00943BA7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B211172E1984BEB50055B843 /* logo_small.png */,
 				7A8AEB0C198474CA00943BA7 /* MappedIn-Info.plist */,
 				7A8AEB0D198474CA00943BA7 /* InfoPlist.strings */,
 				7A8AEB10198474CA00943BA7 /* main.m */,
@@ -204,6 +211,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
+					7A8AEB00198474CA00943BA7 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					7A8AEB21198474CA00943BA7 = {
 						TestTargetID = 7A8AEB00198474CA00943BA7;
 					};
@@ -235,6 +249,7 @@
 			files = (
 				7A8AEB1D198474CA00943BA7 /* Images.xcassets in Resources */,
 				7A8AEB0F198474CA00943BA7 /* InfoPlist.strings in Resources */,
+				B211172F1984BEB50055B843 /* logo_small.png in Resources */,
 				7A8AEB18198474CA00943BA7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,6 +476,7 @@
 				7A8AEB35198474CA00943BA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7A8AEB36198474CA00943BA7 /* Build configuration list for PBXNativeTarget "MappedInTests" */ = {
 			isa = XCConfigurationList;
@@ -469,6 +485,7 @@
 				7A8AEB38198474CA00943BA7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
