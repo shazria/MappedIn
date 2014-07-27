@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet MKMapView *mainMap;
 @property XYZOutsideLands * park;
 @property (weak, nonatomic) IBOutlet UIImageView *swiperBar;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property UIImage * parkImage;
 @end
 
@@ -33,7 +34,7 @@
 
 - (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped right");
-    [self updateHeatMap];
+    // [self updateHeatMap];
     if(![self increment_displayed_map_id]) return;
     [self setSwiperImage];
 }
@@ -46,9 +47,10 @@
     } else {
         NSLog(@"image is downloaded");
     }
-    
+
     [self setCurrentImage: image];
 }
+
 
 - (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiper has been swiped left");
@@ -89,14 +91,14 @@
     }
     self.parkImage = image;
     //[self.mainMap reloadInputViews];
-    
+
     [self.mainMap removeOverlay:self.mainMap.overlays];
     [self addOverlay];
-    
+
 }
 
 - (void)drawLine {
-    
+
 }
 
 - (void)viewDidLoad
@@ -106,13 +108,14 @@
     [self configureStaticUI];
     [self initializeVariables];
 
+
     // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
     UIImage *outsideLandsImage = [UIImage imageNamed:@"map_transparent.png"];
     [self drawImage: (UIImage *)outsideLandsImage];
     [self addOverlay];
     [self setToOutsideLands];
-    
+
 }
 
 - (void)configureStaticUI
@@ -120,6 +123,16 @@
     // Nav bar - general.
     //UIImage *image = [UIImage imageNamed:@"logo_small.png"];
    // [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:image]];  // place logo in nav bar
+    self.title = @"MappedIn";
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     [NSDictionary dictionaryWithObjectsAndKeys:
+      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
+      NSFontAttributeName,
+      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
+      NSForegroundColorAttributeName, nil]];
+    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f]};
+    [self.segControl setTitleTextAttributes:attributes
+                                    forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -184,16 +197,16 @@
     manager.desiredAccuracy = kCLLocationAccuracyBest;
     manager.distanceFilter = 15;
     [manager startUpdatingLocation];
-    
+
     //Initialize swiper
     NSLog(@"adding icon");
 
     current_displayed_map_id = 0;
     mapButtonIcon = @[@"swipe_icon.png", @"swipe_icon2.png"];
-    
+
     [self setSwiperImage];
     [self.swiperBar setUserInteractionEnabled:YES];
-    
+
 }
 
 
@@ -233,37 +246,37 @@
     NSLog(@"latitude %+.6f, longitude %+.6f\n",
           location.coordinate.latitude,
           location.coordinate.longitude);
-    
+
     //send push request
     NSError *error;
-    
+
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     NSURL *url = [NSURL URLWithString:@"http://stuki.org/api/phone/location"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
-    
+
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
+
     [request setHTTPMethod:@"POST"];
-    
+
     NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:
                              encryptedStr, @"phone_id",
                              [NSNumber numberWithDouble:location.coordinate.latitude], @"latitude",
                              [NSNumber numberWithDouble:location.coordinate.longitude], @"longitude",
                              nil];
-    
+
     NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
     [request setHTTPBody:postData];
-    
+
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
+
     }];
-    
+
     [postDataTask resume];
-    
+
     NSLog(@"attempted post request");
 
 }
