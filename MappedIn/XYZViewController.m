@@ -15,7 +15,6 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "XYZPathViewAnnotation.h"
 
-//#import "NSJSONSerialization.h"
 
 
 
@@ -51,7 +50,9 @@
             break;
         case 1: {
             NSLog(@"22222");
-            [self changeToPrivateMap:[self downloadPersonalPath]];
+//            [self changeToPrivateMap:[self downloadPersonalPath]];
+            NSArray * coords = [self downloadPersonalPath];
+            [self changeToPrivateMap:coords];
             break; }
         default:
             break;
@@ -74,46 +75,91 @@
     [self removeAllPinsButUserLocation];
     [self.mainMap removeOverlays:self.mainMap.overlays];
 }
-- (NSArray *)downloadPersonalPath {
-    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
+
+- (NSArray *)downloadPersonalPath{
+
+    
+    UIDevice *device = [UIDevice currentDevice];
+    NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
+    NSString *encryptedStr = [self sha1: currentDeviceId];
+    
+    NSString* url = [NSString stringWithFormat:@"http://stuki.org/rpc/phone/path/%@",encryptedStr];
+    NSData* data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    
+    if(data != nil) {
+        NSLog(@"Successful retrival of personal path");
+    } else {
+        NSLog(@"Failed retrival of personal path");
+    }
+    
+    NSError *localError = nil;
+    NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
+    NSArray* allObj =parsedObject[@"path"];
+    
+    NSLog(@"My dictionary is %@", allObj);
+    
+
+    NSMutableArray*  coordinates = [[NSMutableArray alloc]initWithCapacity:([allObj count] / 10) +1];
+//    CLLocationCoordinate2D pointsToUse[([allObj count] / 10) +1];
+    
+    for(int i = 0; i < [allObj count]; i+=10) {
+        NSDictionary *objectList = (NSArray *)allObj[i];
+        
+        NSString *pair = [NSString stringWithFormat:@"{%@,%@}", objectList[@"latitude"], objectList[@"longitude"]]
+        ;
+
+        [coordinates addObject:pair];
+        
+    }
+    NSArray *array = [NSArray arrayWithArray:coordinates];
+    
+    return array;
+//    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
+    
 }
 
 
-- (void) changeToPrivateMap:(NSArray*)pointsArray{
-
+- (void) changeToPrivateMap:(NSArray*)coords{
+    NSLog(@"My array is %@", coords);
 
     [self resetMap];
     current_displayed_map_id = 1;
     [self addPublicOverlay];
 
+    
     //NSString *thePath = [[NSBundle mainBundle] pathForResource:@"EntranceToGoliathRoute" ofType:@"plist"];
 //    NSArray *pointsArray = [NSArray arrayWithContentsOfFile:thePath];
 
-    if(pointsArray == nil || [pointsArray count] == 0) {
+    if(coords == nil || [coords count] == 0) {
         if(_personalPath == nil) {
             return;
         } else {
-            pointsArray =_personalPath;
+            coords =_personalPath;
         }
     } else {
-        _personalPath = pointsArray;
+        _personalPath = coords;
     }
-    NSInteger pointsCount = pointsArray.count;
 
+    for(int i = 0 ;i < [coords count]; i++) {
+        NSLog(@"%@", coords[i]);
+    }
+    
+    NSInteger pointsCount = [coords count];
+    
     CLLocationCoordinate2D pointsToUse[pointsCount];
-
+    
     for(int i = 0; i < pointsCount; i++) {
-        CGPoint p = CGPointFromString(pointsArray[i]);
+        CGPoint p = CGPointFromString(coords[i]);
         pointsToUse[i] = CLLocationCoordinate2DMake(p.x,p.y);
     }
-
+    
     MKPolyline *myPolyline = [MKPolyline polylineWithCoordinates:pointsToUse count:pointsCount];
-
+    
     [self.mainMap addOverlay:myPolyline];
-
+    
     XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
     XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
-
+    
     [self.mainMap addAnnotations:@[begin,end]];
     [self addPins];
 }
@@ -141,18 +187,6 @@
     return image;
 }
 
-
-
-//- (void)setToCurrentLocation
-//{
-//    CLLocationCoordinate2D zoomLocation;
-//    // TODO: Retrieve real locations here.
-//    zoomLocation.latitude = 37.768555;
-//    zoomLocation.longitude= -122.488445;
-//
-//    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(zoomLocation, 0.5*METERS_PER_MILE, 0.5*METERS_PER_MILE);
-//    [_mainMap setRegion:viewRegion animated:YES];
-//}
 
 - (void)addPublicOverlay {
     NSLog(@"Map has been added");
