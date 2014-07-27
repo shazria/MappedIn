@@ -18,6 +18,7 @@
 @interface XYZViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mainMap;
 @property XYZOutsideLands * park;
+@property (weak, nonatomic) IBOutlet UIImageView *swiperBar;
 @property UIImage * parkImage;
 @end
 
@@ -26,6 +27,47 @@
 @implementation XYZViewController {
     CLLocationManager *manager;
     NSMutableDictionary *responsesData;
+    int current_displayed_map_id;
+    NSArray * mapButtonIcon;
+}
+
+- (IBAction)swipeRight:(UISwipeGestureRecognizer *)sender {
+    NSLog(@"swiper has been swiped right");
+    UIImage *image = [UIImage imageNamed:@"outsidelands_unedited.jpg"];
+    [self setCurrentImage: image];
+//    if(![self increment_displayed_map_id]) return;
+//    [self setSwiperImage];
+}
+- (IBAction)swipeLeft:(UISwipeGestureRecognizer *)sender {
+    NSLog(@"swiper has been swiped left");
+    if(![self decrement_displayed_map_id]) return;
+    [self setSwiperImage];
+}
+
+- (void)setSwiperImage {
+    UIImage *image = [UIImage imageNamed:mapButtonIcon[current_displayed_map_id]];
+    if(image == nil) {
+        NSLog(@"swipe_icon not found");
+    }
+    [self.swiperBar setImage:image];
+}
+
+- (bool)increment_displayed_map_id {
+    if(current_displayed_map_id < [mapButtonIcon count] - 1) {
+        current_displayed_map_id ++;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+- (bool)decrement_displayed_map_id {
+    if(current_displayed_map_id > 0) {
+        current_displayed_map_id --;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 - (void)viewDidLoad
@@ -34,8 +76,8 @@
     [super viewDidLoad];
     [self configureStaticUI];
     [self initializeVariables];
-	// Do any additional setup after loading the view, typically from a nib.
 
+    // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
     UIImage *outsideLandsImage = [UIImage imageNamed:@"map_transparent.png"];
     [self setCurrentImage: (UIImage *)outsideLandsImage];
@@ -43,6 +85,7 @@
     [self setToOutsideLands];
     
 }
+
 
 
 - (void)configureStaticUI
@@ -123,7 +166,23 @@
     manager.desiredAccuracy = kCLLocationAccuracyBest;
     manager.distanceFilter = 10;
     [manager startUpdatingLocation];
+    
+    //Initialize swiper
+    NSLog(@"adding icon");
+
+    current_displayed_map_id = 0;
+    mapButtonIcon = @[@"swipe_icon.png", @"swipe_icon2.png"];
+    
+    UIImage *image = [UIImage imageNamed:@"swipe_icon.png"];
+    if(image == nil) {
+        NSLog(@"swipe_icon not found");
+    }
+    [self.swiperBar setImage:image];
+    [self.swiperBar setUserInteractionEnabled:YES];
+    
 }
+
+
 
 -(NSString*) sha1:(NSString*)input
 {
