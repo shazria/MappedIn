@@ -35,9 +35,9 @@
                                 </connections>
                             </segmentedControl>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wjL-gC-S6S">
-                                <rect key="frame" x="17" y="74" width="43" height="40"/>
+                                <rect key="frame" x="20" y="83" width="43" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="green-home-icon.png">
+                                <state key="normal" title="Button" image="yellow-home-icon.ico">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -79,7 +79,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="green-home-icon.png" width="256" height="256"/>
+        <image name="yellow-home-icon.ico" width="256" height="256"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

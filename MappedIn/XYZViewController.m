@@ -42,6 +42,7 @@
     NSLog(@"Going home");
     [self setToOutsideLands];
 }
+
 - (IBAction)SegValueChanged:(id)sender {
     switch (self.segControl.selectedSegmentIndex) {
         case 0:

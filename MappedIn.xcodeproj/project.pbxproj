@@ -25,6 +25,7 @@
 		7A8AEB3D1984855F00943BA7 /* XYZOutsideLandsOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */; };
 		7ACA0D4C1985487E005FBABB /* green-home-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7ACA0D4B1985487E005FBABB /* green-home-icon.png */; };
 		7ACA0D4F19854B9C005FBABB /* XYZPathViewAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7ACA0D4E19854B9C005FBABB /* XYZPathViewAnnotation.m */; };
+		7ACA0D5119855C45005FBABB /* yellow-home-icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 7ACA0D5019855C45005FBABB /* yellow-home-icon.ico */; };
 		7AD8B950198495CD00763FB7 /* XYZOutsideLandsOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */; };
 		7AD8B9531984986F00763FB7 /* XYZOutsideLands.m in Sources */ = {isa = PBXBuildFile; fileRef = 7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */; };
 		B211173F1984FFFC0055B843 /* outsidelands.png in Resources */ = {isa = PBXBuildFile; fileRef = B211173C1984FFFC0055B843 /* outsidelands.png */; };
@@ -71,6 +72,7 @@
 		7ACA0D4B1985487E005FBABB /* green-home-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "green-home-icon.png"; sourceTree = "<group>"; };
 		7ACA0D4D19854B9C005FBABB /* XYZPathViewAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZPathViewAnnotation.h; sourceTree = "<group>"; };
 		7ACA0D4E19854B9C005FBABB /* XYZPathViewAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYZPathViewAnnotation.m; sourceTree = "<group>"; };
+		7ACA0D5019855C45005FBABB /* yellow-home-icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = "yellow-home-icon.ico"; sourceTree = "<group>"; };
 		7AD8B94E198495CD00763FB7 /* XYZOutsideLandsOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XYZOutsideLandsOverlayView.h; path = ../XYZOutsideLandsOverlayView.h; sourceTree = "<group>"; };
 		7AD8B94F198495CD00763FB7 /* XYZOutsideLandsOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XYZOutsideLandsOverlayView.m; path = ../XYZOutsideLandsOverlayView.m; sourceTree = "<group>"; };
 		7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYZOutsideLands.h; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 				B211173D1984FFFC0055B843 /* outsidelands_unedited.jpg */,
 				B211173E1984FFFC0055B843 /* map_transparent.png */,
 				B2111746198501C90055B843 /* swipe_icon2.png */,
+				7ACA0D5019855C45005FBABB /* yellow-home-icon.ico */,
 				7ACA0D4B1985487E005FBABB /* green-home-icon.png */,
 				B2111744198501B30055B843 /* swipe_icon.png */,
 				7A8AEB1C198474CA00943BA7 /* Images.xcassets */,
@@ -283,6 +286,7 @@
 				B2111745198501B30055B843 /* swipe_icon.png in Resources */,
 				7A8AEB0F198474CA00943BA7 /* InfoPlist.strings in Resources */,
 				B21117401984FFFC0055B843 /* outsidelands_unedited.jpg in Resources */,
+				7ACA0D5119855C45005FBABB /* yellow-home-icon.ico in Resources */,
 				B21117411984FFFC0055B843 /* map_transparent.png in Resources */,
 				B2111747198501C90055B843 /* swipe_icon2.png in Resources */,
 				7A8AEB18198474CA00943BA7 /* Main.storyboard in Resources */,
