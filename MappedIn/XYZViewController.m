@@ -114,6 +114,7 @@
     XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
 
     [self.mainMap addAnnotations:@[begin,end]];
+    [self addPins];
 }
 
 
@@ -124,6 +125,7 @@
         self.parkImage = image;
     }
     [self addPublicOverlay];
+    [self addPins];
 }
 
 - (UIImage *)downloadHeatMap {
@@ -202,6 +204,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     NSLog(@"View is appearing");
+    [self addPins];
 }
 
 // Map Implementations
@@ -218,8 +221,6 @@
 
     self.mainMap.region = region;
 
-    [self addPins];
-
 }
 
 - (XYZPathViewAnnotation *)createAnnotations:(CLLocationCoordinate2D)coord text: (NSString*) title
@@ -231,31 +232,7 @@
 // -------------------------------------------------------------------------------------------------------
 
 
-- (void)configureStaticUI
-{
-    // Nav bar - general.
-    //UIImage *image = [UIImage imageNamed:@"logo_small.png"];
-    // [self.navigationItem setTitleView:[[UIImageView alloc] initWithImage:image]];  // place logo in nav bar
-    self.title = @"MappedIn";
-    [self.navigationController.navigationBar setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
-      NSFontAttributeName,
-      [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
-      NSForegroundColorAttributeName, nil]];
-    NSDictionary *attributes = @{NSFontAttributeName: [UIFont boldSystemFontOfSize:18.0f]};
-    [self.segControl setTitleTextAttributes:attributes
-                                   forState:UIControlStateNormal];
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-// Shana
 
 
 - (void)addPins {
@@ -293,8 +270,6 @@
     [annotation6 setTitle:@"The Barbary"];
     [self.mainMap addAnnotation:annotation6];
 
-
-
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id)annotation {
@@ -308,7 +283,7 @@
     {
 
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-        annotationView.pinColor = MKPinAnnotationColorPurple;
+        annotationView.pinColor = MKPinAnnotationColorRed;
         annotationView.animatesDrop = YES;
         annotationView.canShowCallout = YES;
     }else {
@@ -325,17 +300,18 @@
     self.title = @"MappedIn";
     [self.navigationController.navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
-      [UIFont fontWithName:@"GurmukhiMN-Bold" size:28],
+      [UIFont fontWithName:@"STHeitiSC-Medium" size:28],
       NSFontAttributeName,
       [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
       NSForegroundColorAttributeName, nil]];
 
     // segmenter controller init
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"GurmukhiMN-Bold" size:16], NSFontAttributeName, nil];
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"STHeitiSC-Medium" size:18], NSFontAttributeName, nil];
 
     [self.segControl setTitleTextAttributes:attributes
                                    forState:UIControlStateNormal];
 }
+
 
 
 - (void)initializeVariables {
