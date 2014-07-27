@@ -128,73 +128,25 @@
        
        NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
            
+           if(error == nil)
+           {
+               NSString * text = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+               NSLog(@"Data = %@",text);
+           }
+       
        }];
-       
+    
        [postDataTask resume];
-       
+    
        NSLog(@"attempted post request");
-       
-       
-//      NSURL *url = [NSURL URLWithString:@"http://stuki.org/api/phone/location"];
-//       NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:url];
-//       
-//       NSDictionary *tmp = [[NSDictionary alloc] initWithObjectsAndKeys:
-//                            encryptedStr, @"phone_id",
-//                            [NSNumber numberWithDouble:location.coordinate.latitude], @"latitude",
-//                            [NSNumber numberWithDouble:location.coordinate.longitude], @"longitude",
-//                    nil];
-//       
-//       NSError *error;
-//       NSData *postData = [NSJSONSerialization dataWithJSONObject:tmp options:0 error:&error];
-//       [request setHTTPBody:postData];
-//       
-//       
-//       [request setHTTPMethod:@"POST"];
-//       [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-//       [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-//       [request setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
-//       [request setHTTPBody: postData];
-//       
-//       NSURLConnection *connection = [NSURLConnection connectionWithRequest:request delegate:self];
-//       NSLog(@"Connection: %@", connection);
-       
+    
+    
     }
-    
+
 }
 
 
 
-
-
-- (IBAction)postTestButton:(id)sender {
-    NSError *error;
-    
-    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
-    NSURL *url = [NSURL URLWithString:@"http://stuki.org/api/phone/location"];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:60.0];
-    
-    [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-    
-    [request setHTTPMethod:@"POST"];
-    
-    NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys: @"phone_id" , @"hello again", @"latitude", @"yeaah", @"longitude", @"okaaaay",
-                             nil];
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
-    [request setHTTPBody:postData];
-    
-    NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-    }];
-    
-    [postDataTask resume];
-    
-    NSLog(@"attempted post request");
-    
-}
 
 
 
