@@ -20,11 +20,15 @@
 @interface XYZViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mainMap;
 @property XYZOutsideLands * park;
-@property (weak, nonatomic) IBOutlet UIImageView *swiperBar;
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+
+
 @property (weak, nonatomic) IBOutlet UISegmentedControl *segControl;
 @property UIImage * parkImage;
 @property NSArray * personalPath;
 @property XYZOutsideLandsOverlayView * overlayViewControl;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+
 
 @property (nonatomic, strong) NSArray *dictArr;
 @end
@@ -35,10 +39,43 @@
     CLLocationManager *manager;
     NSMutableDictionary *responsesData;
     int current_displayed_map_id;
-    NSArray * mapButtonIcon;
 }
 
 @synthesize dictArr = _dictArr;
+
+- (BOOL)image:(UIImage *)image1 isEqualTo:(UIImage *)image2
+{
+    NSData *data1 = UIImagePNGRepresentation(image1);
+    NSData *data2 = UIImagePNGRepresentation(image2);
+    
+    return [data1 isEqual:data2];
+}
+
+- (void) refreshButtonOff{
+    self.refreshButton.hidden = YES;
+    self.spinner.hidden = NO;
+    [self.spinner startAnimating];
+}
+
+- (void) refreshButtonOn {
+    self.refreshButton.hidden = NO;
+    self.spinner.hidden = YES;
+    [self.spinner stopAnimating];
+}
+- (IBAction)refreshButtonPressed:(id)sender {
+    
+    [self refreshButtonOff];
+    [NSTimer scheduledTimerWithTimeInterval:(NSTimeInterval)2.0 target:self selector:@selector(refreshButtonOn) userInfo: nil repeats:false];
+    if(current_displayed_map_id == 0) {
+        NSLog(@"refreshed public map");
+        [self changeToPublicMap:[self downloadHeatMap] :true];
+    } else {
+        NSLog(@"refreshed private map");
+        NSArray * coords = [self downloadPersonalPath];
+        [self changeToPrivateMap:coords :true];
+    }
+   
+}
 
 - (IBAction)homeButtonHandler:(id)sender {
     NSLog(@"Going home");
@@ -49,13 +86,16 @@
     switch (self.segControl.selectedSegmentIndex) {
         case 0:
             NSLog(@"11111");
-            [self changeToPublicMap:[self downloadHeatMap]];
+            current_displayed_map_id = 0;
+            [self changeToPublicMap:[self downloadHeatMap] :false];
             break;
         case 1: {
             NSLog(@"22222");
-//            [self changeToPrivateMap:[self downloadPersonalPath]];
+            current_displayed_map_id = 1;
+            
+            //            [self changeToPrivateMap:[self downloadPersonalPath]];
             NSArray * coords = [self downloadPersonalPath];
-            [self changeToPrivateMap:coords];
+            [self changeToPrivateMap:coords :false];
             break; }
         default:
             break;
@@ -66,13 +106,13 @@
 {
     id userLocation = [self.mainMap userLocation];
     NSMutableArray *allPins =[[NSMutableArray alloc] initWithArray:[self.mainMap annotations]];
-//    if ( userLocation != nil ) {
-//        [pins removeObject:userLocation]; // avoid removing user location off the map
-//    }
+    //    if ( userLocation != nil ) {
+    //        [pins removeObject:userLocation]; // avoid removing user location off the map
+    //    }
     XYZPathViewAnnotation * one = nil;
     XYZPathViewAnnotation * two = nil ;
     for(int i = 0;i < [[self.mainMap annotations] count]; i++) {
-        NSLog(@"shit"); 
+        NSLog(@"shit");
         if(![allPins[i] isKindOfClass:[XYZPathViewAnnotation class]]) {
             if([allPins[i] isEqualToString: @"one"])
                 one = allPins[i];
@@ -80,7 +120,7 @@
                 two = allPins[i];
         }
     }
-
+    
     [allPins removeObject:one];
     [allPins removeObject:two];
     [self.mainMap removeAnnotations:allPins];
@@ -88,12 +128,12 @@
 }
 
 - (void) resetMap {
-//    [self removeAllPinsButUserLocation];
+    //    [self removeAllPinsButUserLocation];
     [self.mainMap removeOverlays:self.mainMap.overlays];
 }
 
 - (NSArray *)downloadPersonalPath{
-
+    
     
     UIDevice *device = [UIDevice currentDevice];
     NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
@@ -106,47 +146,43 @@
         NSLog(@"Successful retrival of personal path");
     } else {
         NSLog(@"Failed retrival of personal path");
+        return nil;
     }
     
     NSError *localError = nil;
     NSDictionary *parsedObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&localError];
     NSArray* allObj =parsedObject[@"path"];
     
-    NSLog(@"My dictionary is %@", allObj);
     
-
-    NSMutableArray*  coordinates = [[NSMutableArray alloc]initWithCapacity:([allObj count] / 10) +1];
-//    CLLocationCoordinate2D pointsToUse[([allObj count] / 10) +1];
+    NSMutableArray*  coordinates = [[NSMutableArray alloc]initWithCapacity:[allObj count]];
     
-    for(int i = 0; i < [allObj count]; i+=10) {
+    for(int i = 0; i < [allObj count]; i++) {
         NSDictionary *objectList = (NSArray *)allObj[i];
         
         NSString *pair = [NSString stringWithFormat:@"{%@,%@}", objectList[@"latitude"], objectList[@"longitude"]]
         ;
-
+        
         [coordinates addObject:pair];
         
     }
     NSArray *array = [NSArray arrayWithArray:coordinates];
     
-//    return array;
-//    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
-    return @[@"{37.767916797120236,-122.49392372384827}",@"{37.768829752338533,-122.49199025827274}",@"{37.768981082571756,-122.49048731503703}",@"{37.768914588150821,-122.49042621746531}",@"{37.769194491752273,-122.48962664332748}",@"{37.769553803943005,-122.48789343536545}",@"{37.769888761701729,-122.48661272283738}",@"{37.769441179991226,-122.48604763578537}",@"{37.769960191207161,-122.48313687100783}",@"{37.769500779524847,-122.48424637957896}",@"{37.770560579566443,-122.4909186420783}",@"{37.770006879083326,-122.49258694080943}"];
+    return array;
+    //    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
+    // return @[@"{37.767916797120236,-122.49392372384827}",@"{37.768829752338533,-122.49199025827274}",@"{37.768981082571756,-122.49048731503703}",@"{37.768914588150821,-122.49042621746531}",@"{37.769194491752273,-122.48962664332748}",@"{37.769553803943005,-122.48789343536545}",@"{37.769888761701729,-122.48661272283738}",@"{37.769441179991226,-122.48604763578537}",@"{37.769960191207161,-122.48313687100783}",@"{37.769500779524847,-122.48424637957896}",@"{37.770560579566443,-122.4909186420783}",@"{37.770006879083326,-122.49258694080943}"];
     
 }
 
 
-- (void) changeToPrivateMap:(NSArray*)coords{
-    NSLog(@"My array is %@", coords);
-
+- (void) changeToPrivateMap:(NSArray*)coords : (bool) isRefreshing{
+    if(coords == nil) return;
+    if(isRefreshing &&[coords isEqualToArray:_personalPath]) {
+        return;
+    }
     [self resetMap];
-    current_displayed_map_id = 1;
     [self addPublicOverlay];
-
     
-    //NSString *thePath = [[NSBundle mainBundle] pathForResource:@"EntranceToGoliathRoute" ofType:@"plist"];
-//    NSArray *pointsArray = [NSArray arrayWithContentsOfFile:thePath];
-
+    
     if(coords == nil || [coords count] == 0) {
         if(_personalPath == nil) {
             return;
@@ -155,10 +191,6 @@
         }
     } else {
         _personalPath = coords;
-    }
-
-    for(int i = 0 ;i < [coords count]; i++) {
-        NSLog(@"%@", coords[i]);
     }
     
     NSInteger pointsCount = [coords count];
@@ -174,24 +206,27 @@
     
     [self.mainMap addOverlay:myPolyline];
     
-//    XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
-//    begin.title = @"one";
-//    XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
-//    begin.title = @"two";
-//    
-//    [self.mainMap addAnnotations:@[begin,end]];
-//    [self addPins];
+    //    XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
+    //    begin.title = @"one";
+    //    XYZPathViewAnnotation* end =[self createAnnotations:pointsToUse[pointsCount-1] text:@"end"];
+    //    begin.title = @"two";
+    //
+    //    [self.mainMap addAnnotations:@[begin,end]];
+    //    [self addPins];
 }
 
 
-- (void) changeToPublicMap:(UIImage*)image {
-    current_displayed_map_id = 0;
-    [self resetMap];
-    if(image != nil) {
-        self.parkImage = image;
+- (void) changeToPublicMap:(UIImage*)image :(bool)refreshing {
+    if(image == nil ) {
+        return;
     }
+    if(refreshing && [self image:image isEqualTo:self.parkImage]) {
+        return;
+    }
+    [self resetMap];
+    self.parkImage = image;
     [self addPublicOverlay];
-//    [self addPins];
+    //    [self addPins];
 }
 
 - (UIImage *)downloadHeatMap {
@@ -202,7 +237,6 @@
     } else {
         NSLog(@"image is downloaded");
     }
-
     return image;
 }
 
@@ -226,7 +260,7 @@
         MKPolylineRenderer *lineView = [[MKPolylineRenderer alloc] initWithOverlay:overlay];
         lineView.strokeColor = [UIColor blueColor];
         lineView.lineWidth = 2.0;
-
+        
         return lineView;
     }
     return nil;
@@ -255,13 +289,13 @@
     [self configureStaticUI];
     [self initializeVariables];
     //[self getRequest];
-
-
+    
+    
     // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
-
-    [self changeToPublicMap: [self downloadHeatMap]];
-
+    
+    [self changeToPublicMap: [self downloadHeatMap]: true];
+    
     [self setToOutsideLands];
 }
 
@@ -276,6 +310,7 @@
 {
     NSLog(@"View is appearing");
     [self addPins];
+    self.spinner.hidden = YES;
 }
 
 // Map Implementations
@@ -283,15 +318,15 @@
 {
     self.mainMap.delegate = self;
     CLLocationDegrees latDelta = self.park.overlayTopLeftCoordinate.latitude - self.park.overlayBottomRightCoordinate.latitude;
-
+    
     CLLocationDegrees longDelta = self.park.overlayTopLeftCoordinate.longitude - self.park.overlayBottomRightCoordinate.longitude;
-
-    MKCoordinateSpan span = MKCoordinateSpanMake(fabsf(2*latDelta), 0.0);
-
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(fabsf(3.5*latDelta), 0.0);
+    
     MKCoordinateRegion region = MKCoordinateRegionMake(self.park.midCoordinate, span);
-
+    
     self.mainMap.region = region;
-
+    
 }
 
 - (XYZPathViewAnnotation *)createAnnotations:(CLLocationCoordinate2D)coord text: (NSString*) title
@@ -307,10 +342,10 @@
 
 
 - (void)addPins {
-
+    
     self.mainMap.delegate = self;
     //1
-   
+    
     NSString *myName = self.dictArr[0][@"name"];
     
     MKPointAnnotation *annotation1 = [[MKPointAnnotation alloc] init];
@@ -318,7 +353,7 @@
     [annotation1 setTitle: myName];
     [annotation1 setSubtitle:@"Lands End | 12:00-12:40"];
     [self.mainMap addAnnotation:annotation1];
-
+    
     //2
     myName = self.dictArr[1][@"name"];
     MKPointAnnotation *annotation2 = [[MKPointAnnotation alloc] init];
@@ -359,12 +394,12 @@
     [annotation6 setSubtitle:@"The Barbary| 12:45-1:45"];
     [self.mainMap addAnnotation:annotation6];
     
-
+    
     
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-
+    
     if([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
     [self.mainMap setDelegate:self];
@@ -403,8 +438,8 @@
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
             annotationView.leftCalloutAccessoryView = iconView;
-
-        
+            
+            
         }
         else if ([annotation.subtitle isEqualToString:@"Suto Stage | 2:30-3:00"]) {
             annotationView.image = scaledImage;
@@ -419,7 +454,7 @@
         }
         else if ([annotation.subtitle isEqualToString:@"Panhandle Stage | 12:00-12:40"]) {
             annotationView.image = scaledImage;
-          
+            
             NSArray *myArray = self.dictArr[3][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
@@ -458,8 +493,8 @@
             
             
         }
-
-      
+        
+        
         
     }else {
         annotationView.annotation = annotation;
@@ -497,7 +532,7 @@
 //    // Go to edit view
 //    UIViewController *detailViewController = [[UIViewController alloc] initWithNibName:@"UIViewController" bundle:nil];
 //    [self.navigationController pushViewController:detailViewController animated:YES];
-//    
+//
 //}
 
 
@@ -511,10 +546,10 @@
       NSFontAttributeName,
       [UIColor colorWithRed:(229/255.0) green:(188/255.0) blue:(45/255.0) alpha:1],
       NSForegroundColorAttributeName, nil]];
-
+    
     // segmenter controller init
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:@"STHeitiSC-Medium" size:18], NSFontAttributeName, nil];
-
+    
     [self.segControl setTitleTextAttributes:attributes
                                    forState:UIControlStateNormal];
 }
@@ -522,22 +557,20 @@
 
 
 - (void)initializeVariables {
-
+    
     manager = [[CLLocationManager alloc] init];
     manager.delegate = self;
     manager.desiredAccuracy = kCLLocationAccuracyBest;
     manager.distanceFilter = 15;
     [manager startUpdatingLocation];
-
+    
     //Initialize swiper
     
-    NSLog(@"adding icon");
-
+    
     current_displayed_map_id = 0;
-    mapButtonIcon = @[@"swipe_icon.png", @"swipe_icon2.png"];
     
     
-
+    
 }
 
 
@@ -546,18 +579,18 @@
 {
     const char *cstr = [input cStringUsingEncoding:NSUTF8StringEncoding];
     NSData *data = [NSData dataWithBytes:cstr length:input.length];
-
+    
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
-
+    
     CC_SHA1(data.bytes, data.length, digest);
-
+    
     NSMutableString* output = [NSMutableString stringWithCapacity:CC_SHA1_DIGEST_LENGTH * 2];
-
+    
     for(int i = 0; i < CC_SHA1_DIGEST_LENGTH; i++)
         [output appendFormat:@"%02x", digest[i]];
-
+    
     return output;
-
+    
 }
 
 
@@ -569,31 +602,32 @@
 }
 
 -(NSDictionary*)getRequest:(NSURL *)url {
-   // NSURL *url = [NSURL URLWithString:@"https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x"];
+    NSLog(@"retrieve from Spotify");
+    // NSURL *url = [NSURL URLWithString:@"https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x"];
     __block NSDictionary *dict;
     // Create a download task.
     dispatch_semaphore_t getSemaphore = dispatch_semaphore_create(0);
     
     NSURLSessionDataTask *task = [[NSURLSession sharedSession] dataTaskWithURL:url
-        completionHandler:^(NSData *data,
-         NSURLResponse *response,
-         NSError *error) {
-      if (!error) {
-          NSError *JSONError = nil;
-
-          dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
-          if (JSONError) {
-              NSLog(@"Serialization error: %@", JSONError.localizedDescription);
-          }
-          else {
-             // NSLog(@"Response: %@", dict);
-          }
-      } else {
-          NSLog(@"Error: %@", error.localizedDescription);
-      }
-            dispatch_semaphore_signal(getSemaphore);
-    }];
-
+                                                             completionHandler:^(NSData *data,
+                                                                                 NSURLResponse *response,
+                                                                                 NSError *error) {
+                                                                 if (!error) {
+                                                                     NSError *JSONError = nil;
+                                                                     
+                                                                     dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&JSONError];
+                                                                     if (JSONError) {
+                                                                         NSLog(@"Serialization error: %@", JSONError.localizedDescription);
+                                                                     }
+                                                                     else {
+                                                                         // NSLog(@"Response: %@", dict);
+                                                                     }
+                                                                 } else {
+                                                                     NSLog(@"Error: %@", error.localizedDescription);
+                                                                 }
+                                                                 dispatch_semaphore_signal(getSemaphore);
+                                                             }];
+    
     // Start the task.
     [task resume];
     dispatch_semaphore_wait(getSemaphore, DISPATCH_TIME_FOREVER);
@@ -604,57 +638,58 @@
 -(void)pushRequest:(CLLocation*) location {
     UIDevice *device = [UIDevice currentDevice];
     NSString  *currentDeviceId = [[device identifierForVendor]UUIDString];
-   // NSLog(@"Device ID: %@", currentDeviceId);
+    // NSLog(@"Device ID: %@", currentDeviceId);
     NSString *encryptedStr = [self sha1: currentDeviceId];
-   // NSLog(@"Device ID encrypted: %@", encryptedStr);
-  //  NSLog(@"latitude %+.6f, longitude %+.6f\n",
-        //  location.coordinate.latitude,
-        //  location.coordinate.longitude);
-
+    // NSLog(@"Device ID encrypted: %@", encryptedStr);
+    //  NSLog(@"latitude %+.6f, longitude %+.6f\n",
+    //  location.coordinate.latitude,
+    //  location.coordinate.longitude);
+    
     //send push request
     NSError *error;
-
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:nil];
     NSURL *url = [NSURL URLWithString:@"http://stuki.org/api/phone/location"];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:60.0];
-
+    
     [request addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [request addValue:@"application/json" forHTTPHeaderField:@"Accept"];
-
+    
     [request setHTTPMethod:@"POST"];
-
+    
     NSDictionary *mapData = [[NSDictionary alloc] initWithObjectsAndKeys:
                              encryptedStr, @"phone_id",
                              [NSNumber numberWithDouble:location.coordinate.latitude], @"latitude",
                              [NSNumber numberWithDouble:location.coordinate.longitude], @"longitude",
                              nil];
-
+    
     NSData *postData = [NSJSONSerialization dataWithJSONObject:mapData options:0 error:&error];
     [request setHTTPBody:postData];
-
+    
     NSURLSessionDataTask *postDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-
+        
     }];
-
+    
     [postDataTask resume];
-
+    
     NSLog(@"attempted post request");
-
+    
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *location = [locations lastObject];
     //make sure this is a recent location event
     NSTimeInterval eventInterval = [location.timestamp timeIntervalSinceNow];
-   if(abs(eventInterval) < 15){ //further than 30sec ago
+    if(abs(eventInterval) < 15){ //further than 30sec ago
         //this is recent event
-       [self pushRequest:location];
-   }
+        [self pushRequest:location];
+    }
 }
 
 
 
 @end
+
