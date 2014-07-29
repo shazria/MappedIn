@@ -17,6 +17,8 @@
 #import <Foundation/Foundation.h>
 
 
+static bool const USE_TEST_DATA = false;
+
 @interface XYZViewController () <CLLocationManagerDelegate>
 @property (weak, nonatomic) IBOutlet MKMapView *mainMap;
 @property XYZOutsideLands * park;
@@ -39,6 +41,7 @@
     CLLocationManager *manager;
     NSMutableDictionary *responsesData;
     int current_displayed_map_id;
+    bool locationServiceOn;
 }
 
 @synthesize dictArr = _dictArr;
@@ -91,6 +94,15 @@
             break;
         case 1: {
             NSLog(@"22222");
+            if(![CLLocationManager locationServicesEnabled] ||
+               [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You Are Not MappedIn!"
+                                                                message:@"Please Turn On Location Service"
+                                                               delegate:self
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles:nil];
+                [alert show];
+            }
             current_displayed_map_id = 1;
             
             //            [self changeToPrivateMap:[self downloadPersonalPath]];
@@ -167,10 +179,12 @@
     }
     NSArray *array = [NSArray arrayWithArray:coordinates];
     
-    return array;
-    //    return @[@"{37.7679523696108,-122.493548619190}", @"{37.7683324214340,-122.491511479933}"];
-    // return @[@"{37.767916797120236,-122.49392372384827}",@"{37.768829752338533,-122.49199025827274}",@"{37.768981082571756,-122.49048731503703}",@"{37.768914588150821,-122.49042621746531}",@"{37.769194491752273,-122.48962664332748}",@"{37.769553803943005,-122.48789343536545}",@"{37.769888761701729,-122.48661272283738}",@"{37.769441179991226,-122.48604763578537}",@"{37.769960191207161,-122.48313687100783}",@"{37.769500779524847,-122.48424637957896}",@"{37.770560579566443,-122.4909186420783}",@"{37.770006879083326,-122.49258694080943}"];
-    
+    if(USE_TEST_DATA) {
+        return @[@"{37.767916797120236,-122.49392372384827}",@"{37.768829752338533,-122.49199025827274}",@"{37.768981082571756,-122.49048731503703}",@"{37.768914588150821,-122.49042621746531}",@"{37.769194491752273,-122.48962664332748}",@"{37.769553803943005,-122.48789343536545}",@"{37.769888761701729,-122.48661272283738}",@"{37.769441179991226,-122.48604763578537}",@"{37.769960191207161,-122.48313687100783}",@"{37.769500779524847,-122.48424637957896}",@"{37.770560579566443,-122.4909186420783}",@"{37.770006879083326,-122.49258694080943}"];
+    }
+    else {
+       return array;
+    }
 }
 
 
@@ -205,6 +219,7 @@
     MKPolyline *myPolyline = [MKPolyline polylineWithCoordinates:pointsToUse count:pointsCount];
     
     [self.mainMap addOverlay:myPolyline];
+    [self changeToCurrentLoc];
     
     //    XYZPathViewAnnotation* begin =[self createAnnotations:pointsToUse[0] text:@"begin"];
     //    begin.title = @"one";
@@ -226,6 +241,7 @@
     [self resetMap];
     self.parkImage = image;
     [self addPublicOverlay];
+    [self setToOutsideLands];
     //    [self addPins];
 }
 
@@ -280,23 +296,51 @@
     return _dictArr;
 }
 
+- (void)appDidBecomeActive:(NSNotification *)notification {
+    NSLog(@"did become active notification");
+    if(![CLLocationManager locationServicesEnabled] ||
+       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        [manager stopUpdatingLocation];
+        locationServiceOn = false;
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You Are Not MappedIn!"
+                                                        message:@"Turn on location service for personal maps."
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    } else if(!locationServiceOn) {
+        NSLog(@"Turning On Location Services");
+        manager = [[CLLocationManager alloc] init];
+        manager.delegate = self;
+        manager.desiredAccuracy = kCLLocationAccuracyBest;
+        manager.distanceFilter = 15;
+        [manager startUpdatingLocation];
+        locationServiceOn = true;
+    }
+}
+
 - (void)viewDidLoad
 {
     NSLog(@"View is loading");
     self.dictArr;
-    
+    locationServiceOn =false;
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     [self configureStaticUI];
     [self initializeVariables];
     //[self getRequest];
     
-    
+    self.mainMap.delegate = self;
     // Set up Maps.
     _park = [[XYZOutsideLands alloc] initHard];
     
     [self changeToPublicMap: [self downloadHeatMap]: true];
     
     [self setToOutsideLands];
+    [self addPins];
+
 }
 
 
@@ -309,14 +353,26 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     NSLog(@"View is appearing");
-    [self addPins];
-    self.spinner.hidden = YES;
+    
+}
+
+- (void )changeToCurrentLoc {
+    if(![CLLocationManager locationServicesEnabled] ||
+       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        NSLog(@"location service denied");
+        return;
+    }
+    MKCoordinateRegion mapRegion;
+    mapRegion.center = [self.mainMap userLocation].coordinate;
+    mapRegion.span.latitudeDelta = 0.005;
+    mapRegion.span.longitudeDelta = 0.005;
+    self.mainMap.region = mapRegion;
 }
 
 // Map Implementations
 - (void)setToOutsideLands
 {
-    self.mainMap.delegate = self;
+    
     CLLocationDegrees latDelta = self.park.overlayTopLeftCoordinate.latitude - self.park.overlayBottomRightCoordinate.latitude;
     
     CLLocationDegrees longDelta = self.park.overlayTopLeftCoordinate.longitude - self.park.overlayBottomRightCoordinate.longitude;
@@ -558,17 +614,12 @@
 
 - (void)initializeVariables {
     
-    manager = [[CLLocationManager alloc] init];
-    manager.delegate = self;
-    manager.desiredAccuracy = kCLLocationAccuracyBest;
-    manager.distanceFilter = 15;
-    [manager startUpdatingLocation];
-    
+
     //Initialize swiper
     
     
     current_displayed_map_id = 0;
-    
+    self.spinner.hidden = YES;
     
     
 }
@@ -680,6 +731,10 @@
 }
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    if(![CLLocationManager locationServicesEnabled] ||
+       [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
+        return;
+    }
     CLLocation *location = [locations lastObject];
     //make sure this is a recent location event
     NSTimeInterval eventInterval = [location.timestamp timeIntervalSinceNow];
