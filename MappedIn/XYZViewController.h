@@ -10,6 +10,6 @@
 #import <MapKit/MapKit.h>
 
 
-@interface XYZViewController : UIViewController <MKMapViewDelegate, NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate>
+@interface XYZViewController : UIViewController <MKMapViewDelegate, NSURLSessionDataDelegate, NSURLSessionDelegate, NSURLSessionTaskDelegate, MKMapViewDelegate>
 
 @end

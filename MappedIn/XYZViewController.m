@@ -310,33 +310,27 @@
 
     self.mainMap.delegate = self;
     //1
-   // NSURL *url = [NSURL URLWithString:@"https://api.spotify.com/v1/artists/10NEMYLJwVvYSvtvZn5Ipz"];
-   // NSDictionary *myDict = [self getRequest:url];
-    
+   
     NSString *myName = self.dictArr[0][@"name"];
     
     MKPointAnnotation *annotation1 = [[MKPointAnnotation alloc] init];
-    annotation1.coordinate = CLLocationCoordinate2DMake(37.7678, -122.49428);
+    annotation1.coordinate = CLLocationCoordinate2DMake(37.76775, -122.4945);
     [annotation1 setTitle: myName];
     [annotation1 setSubtitle:@"Lands End | 12:00-12:40"];
     [self.mainMap addAnnotation:annotation1];
 
     //2
-    //url = [NSURL URLWithString:@"https://api.spotify.com/v1/artists/4BqZuFqHJ8CLn3ig0f1m0G"];
-    //myDict = [self getRequest:url];
     myName = self.dictArr[1][@"name"];
     MKPointAnnotation *annotation2 = [[MKPointAnnotation alloc] init];
-    annotation2.coordinate = CLLocationCoordinate2DMake(37.76809, -122.490965);
+    annotation2.coordinate = CLLocationCoordinate2DMake(37.76805, -122.4911);
     [annotation2 setTitle: myName];
     [annotation2 setSubtitle:@"The Dome By Heineken | 4:30-6:00"];
     [self.mainMap addAnnotation:annotation2];
     
     //3
-   // url = [NSURL URLWithString:@"https://api.spotify.com/v1/artists/57kIMCLPgkzQlXjblX7XXP"];
-   // myDict = [self getRequest:url];
     myName = self.dictArr[2][@"name"];
     MKPointAnnotation *annotation3 = [[MKPointAnnotation alloc] init];
-    annotation3.coordinate = CLLocationCoordinate2DMake(37.769935, -122.49275);
+    annotation3.coordinate = CLLocationCoordinate2DMake(37.76988, -122.49294);
     [annotation3 setTitle: myName];
     [annotation3 setSubtitle:@"Suto Stage | 2:30-3:00"];
     [self.mainMap addAnnotation:annotation3];
@@ -344,7 +338,7 @@
     //4
     myName = self.dictArr[3][@"name"];
     MKPointAnnotation *annotation4 = [[MKPointAnnotation alloc] init];
-    annotation4.coordinate = CLLocationCoordinate2DMake(37.76987, -122.4852);
+    annotation4.coordinate = CLLocationCoordinate2DMake(37.76987, -122.48532);
     [annotation4 setTitle: myName];
     [annotation4 setSubtitle:@"Panhandle Stage | 12:00-12:40"];
     [self.mainMap addAnnotation:annotation4];
@@ -352,7 +346,7 @@
     //5
     myName = self.dictArr[4][@"name"];
     MKPointAnnotation *annotation5 = [[MKPointAnnotation alloc] init];
-    annotation5.coordinate = CLLocationCoordinate2DMake(37.769808, -122.482549);
+    annotation5.coordinate = CLLocationCoordinate2DMake(37.769808, -122.4827);
     [annotation5 setTitle: myName];
     [annotation5 setSubtitle:@"Twin Peaks Stage | 12:00-12:40"];
     [self.mainMap addAnnotation:annotation5];
@@ -360,47 +354,51 @@
     //6
     myName = self.dictArr[5][@"name"];
     MKPointAnnotation *annotation6 = [[MKPointAnnotation alloc] init];
-    annotation6.coordinate = CLLocationCoordinate2DMake(37.770447, -122.48853);
+    annotation6.coordinate = CLLocationCoordinate2DMake(37.77035, -122.4887);
     [annotation6 setTitle: myName];
     [annotation6 setSubtitle:@"The Barbary| 12:45-1:45"];
     [self.mainMap addAnnotation:annotation6];
+    
 
+    
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
 
     if([annotation isKindOfClass:[MKUserLocation class]])
         return nil;
-    
+    [self.mainMap setDelegate:self];
     static NSString *identifier = @"myAnnotation";
-    MKPinAnnotationView * annotationView = (MKPinAnnotationView*)[self.mainMap dequeueReusableAnnotationViewWithIdentifier:identifier];
+    MKAnnotationView * annotationView = (MKAnnotationView*)[self.mainMap dequeueReusableAnnotationViewWithIdentifier:identifier];
+    CGSize iconSize = CGSizeMake(24.0,34.0);
+    CGSize firstSize = CGSizeMake(45.0,45.0);
+    
+    UIImage *scaledImage = [self image:[UIImage imageNamed:@"yellowIcon.png"] scaledToSize:iconSize];
+    
+    annotationView.canShowCallout = YES;
     if (!annotationView)
     {
-       
-        //NSLog(@"Fetched Title: %@", annotation.title);
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
-        annotationView.pinColor = MKPinAnnotationColorRed;
-        annotationView.animatesDrop = YES;
         annotationView.canShowCallout = YES;
         
         if ([annotation.subtitle isEqualToString:@"Lands End | 12:00-12:40"]) {
-           //annotationView.pinColor = MKPinAnnotationColorRed;
+            annotationView.image = scaledImage;
             NSArray *myArray = self.dictArr[0][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
             UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            CGSize firstSize = CGSizeMake(45.0,45.0);
+            
             UIImage *scaledImage = [self image:image scaledToSize:firstSize];
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
             annotationView.leftCalloutAccessoryView = iconView;        }
         else if ([annotation.subtitle isEqualToString:@"The Dome By Heineken | 4:30-6:00"]) {
-            //annotationView.pinColor = MKPinAnnotationColorRed;
+            annotationView.image = scaledImage;
+            NSLog(@"WTF is going on!!!");
             NSArray *myArray = self.dictArr[1][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
             UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            CGSize firstSize = CGSizeMake(45.0,45.0);
             UIImage *scaledImage = [self image:image scaledToSize:firstSize];
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
@@ -409,24 +407,23 @@
         
         }
         else if ([annotation.subtitle isEqualToString:@"Suto Stage | 2:30-3:00"]) {
-            //annotationView.pinColor = MKPinAnnotationColorPurple;
+            annotationView.image = scaledImage;
             NSArray *myArray = self.dictArr[2][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
             UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            CGSize firstSize = CGSizeMake(45.0,45.0);
             UIImage *scaledImage = [self image:image scaledToSize:firstSize];
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
             annotationView.leftCalloutAccessoryView = iconView;
         }
         else if ([annotation.subtitle isEqualToString:@"Panhandle Stage | 12:00-12:40"]) {
-           //annotationView.pinColor = MKPinAnnotationColorPurple;
+            annotationView.image = scaledImage;
+          
             NSArray *myArray = self.dictArr[3][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
             UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            CGSize firstSize = CGSizeMake(45.0,45.0);
             UIImage *scaledImage = [self image:image scaledToSize:firstSize];
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
@@ -435,12 +432,12 @@
             
         }
         else if ([annotation.subtitle isEqualToString:@"Twin Peaks Stage | 12:00-12:40"]) {
-            //annotationView.pinColor = MKPinAnnotationColorPurple;
+            
+            annotationView.image = scaledImage;
             NSArray *myArray = self.dictArr[4][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
             UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            CGSize firstSize = CGSizeMake(45.0,45.0);
             UIImage *scaledImage = [self image:image scaledToSize:firstSize];
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
@@ -449,12 +446,11 @@
             
         }
         else if ([annotation.subtitle isEqualToString:@"The Barbary| 12:45-1:45"]) {
-            //annotationView.pinColor = MKPinAnnotationColorPurple;
+            annotationView.image = scaledImage;
             NSArray *myArray = self.dictArr[5][@"images"];
             NSDictionary *imageDict = [myArray objectAtIndex:0];
             NSString *imageURL = imageDict[@"url"];
             UIImage *image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageURL]]];
-            CGSize firstSize = CGSizeMake(45.0,45.0);
             UIImage *scaledImage = [self image:image scaledToSize:firstSize];
             
             UIImageView *iconView = [[UIImageView alloc] initWithImage:scaledImage];
@@ -539,7 +535,8 @@
 
     current_displayed_map_id = 0;
     mapButtonIcon = @[@"swipe_icon.png", @"swipe_icon2.png"];
-
+    
+    
 
 }
 

@@ -35,6 +35,10 @@
 		B2111747198501C90055B843 /* swipe_icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = B2111746198501C90055B843 /* swipe_icon2.png */; };
 		B2111749198536FD0055B843 /* Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2111748198536FD0055B843 /* Spotify.framework */; };
 		B226017719855FB2002053B0 /* yellow-home-icon.ico in Resources */ = {isa = PBXBuildFile; fileRef = B226017619855FB2002053B0 /* yellow-home-icon.ico */; };
+		B2702E5E1987187000FA5D47 /* dj-26.png in Resources */ = {isa = PBXBuildFile; fileRef = B2702E5D1987187000FA5D47 /* dj-26.png */; };
+		B2702E6019871C7300FA5D47 /* yellowIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = B2702E5F19871C7300FA5D47 /* yellowIcon.png */; };
+		B2702E681987319000FA5D47 /* make-dicision-green.png in Resources */ = {isa = PBXBuildFile; fileRef = B2702E671987319000FA5D47 /* make-dicision-green.png */; };
+		B2702E6A1987329400FA5D47 /* make-dicision-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = B2702E691987329400FA5D47 /* make-dicision-blue.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +89,10 @@
 		B2111746198501C90055B843 /* swipe_icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = swipe_icon2.png; sourceTree = "<group>"; };
 		B2111748198536FD0055B843 /* Spotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Spotify.framework; sourceTree = "<group>"; };
 		B226017619855FB2002053B0 /* yellow-home-icon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = "yellow-home-icon.ico"; sourceTree = "<group>"; };
+		B2702E5D1987187000FA5D47 /* dj-26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dj-26.png"; sourceTree = "<group>"; };
+		B2702E5F19871C7300FA5D47 /* yellowIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yellowIcon.png; sourceTree = "<group>"; };
+		B2702E671987319000FA5D47 /* make-dicision-green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "make-dicision-green.png"; sourceTree = "<group>"; };
+		B2702E691987329400FA5D47 /* make-dicision-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "make-dicision-blue.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +169,9 @@
 				7A8AEB3C1984855F00943BA7 /* XYZOutsideLandsOverlay.m */,
 				7AD8B9511984986F00763FB7 /* XYZOutsideLands.h */,
 				7AD8B9521984986F00763FB7 /* XYZOutsideLands.m */,
+				B2702E691987329400FA5D47 /* make-dicision-blue.png */,
 				B211173C1984FFFC0055B843 /* outsidelands.png */,
+				B2702E671987319000FA5D47 /* make-dicision-green.png */,
 				B211173D1984FFFC0055B843 /* outsidelands_unedited.jpg */,
 				B211173E1984FFFC0055B843 /* map_transparent.png */,
 				B2111746198501C90055B843 /* swipe_icon2.png */,
@@ -169,6 +179,8 @@
 				7ACA0D5019855C45005FBABB /* yellow-home-icon.ico */,
 				7ACA0D4B1985487E005FBABB /* green-home-icon.png */,
 				B2111744198501B30055B843 /* swipe_icon.png */,
+				B2702E5F19871C7300FA5D47 /* yellowIcon.png */,
+				B2702E5D1987187000FA5D47 /* dj-26.png */,
 				7A8AEB1C198474CA00943BA7 /* Images.xcassets */,
 				7A8AEB0B198474CA00943BA7 /* Supporting Files */,
 			);
@@ -253,7 +265,7 @@
 				ORGANIZATIONNAME = "___FULLUSERNAME___";
 				TargetAttributes = {
 					7A8AEB00198474CA00943BA7 = {
-						DevelopmentTeam = STPYU7UNB9;
+						DevelopmentTeam = E2L5G3LYSL;
 					};
 					7A8AEB21198474CA00943BA7 = {
 						TestTargetID = 7A8AEB00198474CA00943BA7;
@@ -284,6 +296,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2702E6A1987329400FA5D47 /* make-dicision-blue.png in Resources */,
 				7ACA0D4C1985487E005FBABB /* green-home-icon.png in Resources */,
 				7A8AEB1D198474CA00943BA7 /* Images.xcassets in Resources */,
 				B2111745198501B30055B843 /* swipe_icon.png in Resources */,
@@ -291,9 +304,12 @@
 				B226017719855FB2002053B0 /* yellow-home-icon.ico in Resources */,
 				B21117401984FFFC0055B843 /* outsidelands_unedited.jpg in Resources */,
 				7ACA0D5119855C45005FBABB /* yellow-home-icon.ico in Resources */,
+				B2702E5E1987187000FA5D47 /* dj-26.png in Resources */,
 				B21117411984FFFC0055B843 /* map_transparent.png in Resources */,
 				B2111747198501C90055B843 /* swipe_icon2.png in Resources */,
 				7A8AEB18198474CA00943BA7 /* Main.storyboard in Resources */,
+				B2702E681987319000FA5D47 /* make-dicision-green.png in Resources */,
+				B2702E6019871C7300FA5D47 /* yellowIcon.png in Resources */,
 				B211173F1984FFFC0055B843 /* outsidelands.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
