@@ -300,17 +300,14 @@ static bool const USE_TEST_DATA = false;
     NSLog(@"did become active notification");
     if(![CLLocationManager locationServicesEnabled] ||
        [CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied) {
-        [manager stopUpdatingLocation];
+        if(manager!=nil)
+            [manager stopUpdatingLocation];
         locationServiceOn = false;
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"You Are Not MappedIn!"
-                                                        message:@"Turn on location service for personal maps."
-                                                       delegate:self
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
+        
     } else if(!locationServiceOn) {
         NSLog(@"Turning On Location Services");
-        manager = [[CLLocationManager alloc] init];
+        if(manager==nil)
+            manager = [[CLLocationManager alloc] init];
         manager.delegate = self;
         manager.desiredAccuracy = kCLLocationAccuracyBest;
         manager.distanceFilter = 15;
@@ -617,7 +614,7 @@ static bool const USE_TEST_DATA = false;
 
     //Initialize swiper
     
-    
+    manager=nil;
     current_displayed_map_id = 0;
     self.spinner.hidden = YES;
     
