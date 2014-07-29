@@ -34,21 +34,33 @@
                                     <action selector="SegValueChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="kHl-4w-tdL"/>
                                 </connections>
                             </segmentedControl>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wjL-gC-S6S">
-                                <rect key="frame" x="12" y="78" width="43" height="40"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                    </view>
+                    <navigationItem key="navigationItem" id="tXS-RQ-hAX">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="kXS-7d-273">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kl8-GO-zfX">
+                                <rect key="frame" x="16" y="5" width="35" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="yellow-home-icon.ico">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="homeButtonHandler:" destination="vXZ-lx-hvc" eventType="touchDown" id="fde-tA-f7B"/>
+                                    <action selector="homeButtonHandler:" destination="vXZ-lx-hvc" eventType="touchDown" id="KFI-Yg-cew"/>
                                 </connections>
                             </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <gestureRecognizers/>
-                    </view>
-                    <navigationItem key="navigationItem" id="tXS-RQ-hAX"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="kEN-ke-iGL">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="dkg-Eh-Q9X">
+                                <rect key="frame" x="271" y="7" width="33" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="make-dicision-green.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mainMap" destination="4ub-GB-Y8n" id="8CI-SG-g9x"/>
                         <outlet property="segControl" destination="n7W-g5-Ljh" id="SEx-ac-zVa"/>
@@ -56,7 +68,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="816" y="66"/>
+            <point key="canvasLocation" x="833" y="75"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wfL-4D-0TI">
@@ -79,6 +91,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="make-dicision-green.png" width="48" height="48"/>
         <image name="yellow-home-icon.ico" width="256" height="256"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
