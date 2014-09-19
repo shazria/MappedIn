@@ -1,5 +1,5 @@
 MappedIn
-
+MappedIn - OutsideLands Hackathon 2014 (2nd place)
 ===========
 Our team won second place at this hackathon
 We built MappedIn, an iOS mobile dynamic population heatmapper. Takes in mobile geolocation data and 
